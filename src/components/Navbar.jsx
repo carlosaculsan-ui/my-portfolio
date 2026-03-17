@@ -203,20 +203,40 @@ export default function Navbar() {
         <a
           href="#hero"
           onClick={(e) => { e.preventDefault(); scrollTo('hero'); }}
-          style={{
-            fontFamily: '"Oswald", sans-serif',
-            fontWeight: 700,
-            fontSize: '1.5rem',
-            letterSpacing: '0.08em',
-            background: 'linear-gradient(135deg, #6C63FF 0%, #00c4b4 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-            textDecoration: 'none',
-            flexShrink: 0,
-          }}
+          style={{ textDecoration: 'none', flexShrink: 0, display: 'flex', alignItems: 'center' }}
+          aria-label="Home"
         >
-          YN
+          {/* Two overlapping rotated squares — matching the brand mark */}
+          <svg
+            width="38"
+            height="42"
+            viewBox="-4 -2 66 72"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {/* Blue-steel square — upper-left */}
+            <rect
+              x="1"
+              y="1"
+              width="36"
+              height="36"
+              stroke="#5b7ea8"
+              strokeWidth="2.6"
+              fill="none"
+              transform="rotate(13 19 19)"
+            />
+            {/* Copper square — lower-right */}
+            <rect
+              x="21"
+              y="31"
+              width="36"
+              height="36"
+              stroke="#c07858"
+              strokeWidth="2.6"
+              fill="none"
+              transform="rotate(13 39 49)"
+            />
+          </svg>
         </a>
 
         {/* Desktop links + controls */}
