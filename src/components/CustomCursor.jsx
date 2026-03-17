@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 export default function CustomCursor() {
   const dotRef  = useRef(null);
   const ringRef = useRef(null);
+  const spotRef = useRef(null);
   const mouse   = useRef({ x: -100, y: -100 });
   const ring    = useRef({ x: -100, y: -100 });
   const rafId   = useRef(null);
@@ -10,6 +11,7 @@ export default function CustomCursor() {
   useEffect(() => {
     const dot     = dotRef.current;
     const ringEl  = ringRef.current;
+    const spotEl  = spotRef.current;
 
     const lerp = (a, b, t) => a + (b - a) * t;
 
@@ -18,6 +20,15 @@ export default function CustomCursor() {
       mouse.current.y = e.clientY;
       dot.style.left = `${e.clientX}px`;
       dot.style.top  = `${e.clientY}px`;
+
+      // Adjust spotlight intensity for dark vs light mode
+      const dark = document.documentElement.classList.contains('dark');
+      const [c1, c2] = dark
+        ? ['rgba(108,99,255,0.10)', 'rgba(108,99,255,0.03)']   // subtle on dark
+        : ['rgba(108,99,255,0.18)', 'rgba(108,99,255,0.06)'];  // stronger on light
+
+      spotEl.style.background =
+        `radial-gradient(700px circle at ${e.clientX}px ${e.clientY}px, ${c1} 0%, ${c2} 35%, transparent 65%)`;
     };
 
     const loop = () => {
@@ -63,6 +74,16 @@ export default function CustomCursor() {
     <>
       <div ref={dotRef}  className="cursor-dot"  />
       <div ref={ringRef} className="cursor-ring" />
+      {/* Global spotlight — fixed so it covers the full viewport */}
+      <div
+        ref={spotRef}
+        style={{
+          position: 'fixed',
+          inset: 0,
+          pointerEvents: 'none',
+          zIndex: 1,
+        }}
+      />
     </>
   );
 }

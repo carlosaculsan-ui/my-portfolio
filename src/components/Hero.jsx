@@ -40,7 +40,6 @@ function useMagnetic() {
 
 export default function Hero() {
   const sectionRef  = useRef(null);
-  const spotRef     = useRef(null);
   const [subtitleIndex, setSubtitleIndex] = useState(0);
   const [displayed,     setDisplayed]     = useState('');
   const [phase,         setPhase]         = useState('typing');
@@ -82,20 +81,6 @@ export default function Hero() {
     return () => ctx.revert();
   }, []);
 
-  // Spotlight effect
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-    const onMove = (e) => {
-      const rect = section.getBoundingClientRect();
-      if (spotRef.current) {
-        spotRef.current.style.background =
-          `radial-gradient(650px circle at ${e.clientX - rect.left}px ${e.clientY - rect.top}px, rgba(108,99,255,0.10) 0%, rgba(108,99,255,0.03) 35%, transparent 65%)`;
-      }
-    };
-    section.addEventListener('mousemove', onMove);
-    return () => section.removeEventListener('mousemove', onMove);
-  }, []);
 
   const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
@@ -134,11 +119,6 @@ export default function Hero() {
         }} />
       </div>
 
-      {/* Spotlight overlay */}
-      <div
-        ref={spotRef}
-        style={{ position: 'absolute', inset: 0, pointerEvents: 'none', transition: 'background 0.1s ease' }}
-      />
 
       {/* Content */}
       <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 1.5rem', maxWidth: '860px' }}>
