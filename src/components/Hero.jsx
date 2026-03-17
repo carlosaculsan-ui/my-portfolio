@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 
 const SUBTITLE_TEXTS = [
-  'I build things for the web.',
-  'I craft immersive UI experiences.',
-  'I turn ideas into reality.',
+  'I build things that people actually use.',
+  'I bring ideas to life.',
+  'I design and develop interactive game experiences.',
 ];
 
 function useMagnetic() {
@@ -170,7 +170,7 @@ export default function Hero() {
             marginBottom: '1.5rem',
           }}
         >
-          Your Name.
+          Carlo Saculsan
         </h1>
 
         <p
