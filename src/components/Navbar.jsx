@@ -61,39 +61,64 @@ function MagneticLink({ label }) {
 
 function ThemeToggle() {
   const { isDark, toggleTheme } = useTheme();
-  const [spinning, setSpinning] = useState(false);
-
-  const handleClick = () => {
-    setSpinning(true);
-    toggleTheme();
-    setTimeout(() => setSpinning(false), 420);
-  };
 
   return (
     <button
-      onClick={handleClick}
+      onClick={toggleTheme}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       style={{
-        width: '36px',
-        height: '36px',
-        borderRadius: '50%',
-        border: '1.5px solid rgba(108,99,255,0.35)',
-        background: isDark ? 'rgba(108,99,255,0.12)' : 'rgba(108,99,255,0.08)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: '#6C63FF',
+        position: 'relative',
+        width: '56px',
+        height: '28px',
+        borderRadius: '999px',
+        border: 'none',
+        padding: 0,
         flexShrink: 0,
-        transform: spinning ? 'rotate(360deg) scale(1.15)' : 'rotate(0deg) scale(1)',
-        transition: spinning
-          ? 'transform 0.4s cubic-bezier(0.34,1.56,0.64,1)'
-          : 'transform 0.3s ease, box-shadow 0.2s ease',
+        cursor: 'none',
+        backgroundColor: isDark ? '#1a1a2e' : '#e8e8f4',
+        boxShadow: isDark
+          ? 'inset 0 0 0 1.5px rgba(255,255,255,0.1)'
+          : 'inset 0 0 0 1.5px rgba(0,0,0,0.1)',
+        transition: 'background-color 0.35s ease, box-shadow 0.35s ease',
       }}
-      onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 14px rgba(108,99,255,0.4)'; }}
-      onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none'; }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.boxShadow = isDark
+          ? 'inset 0 0 0 1.5px rgba(108,99,255,0.6), 0 0 12px rgba(108,99,255,0.3)'
+          : 'inset 0 0 0 1.5px rgba(108,99,255,0.5), 0 0 10px rgba(108,99,255,0.2)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.boxShadow = isDark
+          ? 'inset 0 0 0 1.5px rgba(255,255,255,0.1)'
+          : 'inset 0 0 0 1.5px rgba(0,0,0,0.1)';
+      }}
     >
-      {isDark ? <Sun size={15} strokeWidth={2} /> : <Moon size={15} strokeWidth={2} />}
+      {/* Sliding knob */}
+      <span
+        style={{
+          position: 'absolute',
+          top: '3px',
+          left: isDark ? 'calc(100% - 25px)' : '3px',
+          width: '22px',
+          height: '22px',
+          borderRadius: '50%',
+          backgroundColor: isDark ? '#6C63FF' : '#ffffff',
+          boxShadow: isDark
+            ? '0 2px 8px rgba(108,99,255,0.5)'
+            : '0 2px 6px rgba(0,0,0,0.18)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: isDark ? '#ffffff' : '#f0a500',
+          transition: 'left 0.35s cubic-bezier(0.34,1.28,0.64,1), background-color 0.35s ease, box-shadow 0.35s ease',
+          pointerEvents: 'none',
+        }}
+      >
+        {isDark
+          ? <Moon size={11} strokeWidth={2.5} />
+          : <Sun size={12} strokeWidth={2.5} />
+        }
+      </span>
     </button>
   );
 }
@@ -197,7 +222,6 @@ export default function Navbar() {
         {/* Desktop links + controls */}
         <div className="hidden md:flex" style={{ gap: '2.5rem', alignItems: 'center' }}>
           {links.map((l) => <MagneticLink key={l} label={l} />)}
-          <ThemeToggle />
           <a
             href="#contact"
             onClick={(e) => { e.preventDefault(); scrollTo('contact'); }}
