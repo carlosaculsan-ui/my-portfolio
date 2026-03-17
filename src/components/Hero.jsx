@@ -43,7 +43,7 @@ export default function Hero() {
   const spotRef     = useRef(null);
   const [subtitleIndex, setSubtitleIndex] = useState(0);
   const [displayed,     setDisplayed]     = useState('');
-  const [phase,         setPhase]         = useState('typing'); // 'typing' | 'pausing' | 'erasing'
+  const [phase,         setPhase]         = useState('typing');
   const btn1Ref = useMagnetic();
   const btn2Ref = useMagnetic();
 
@@ -51,7 +51,6 @@ export default function Hero() {
   useEffect(() => {
     const full = SUBTITLE_TEXTS[subtitleIndex];
     let timer;
-
     if (phase === 'typing') {
       if (displayed.length < full.length) {
         timer = setTimeout(() => setDisplayed(full.slice(0, displayed.length + 1)), 65);
@@ -74,11 +73,11 @@ export default function Hero() {
   // Entrance animation
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.hero-greeting', { y: 30, opacity: 0, duration: 0.8, delay: 0.5, ease: 'power3.out' });
+      gsap.from('.hero-greeting', { y: 30, opacity: 0, duration: 0.8, delay: 0.5,  ease: 'power3.out' });
       gsap.from('.hero-name',     { y: 40, opacity: 0, duration: 0.9, delay: 0.75, ease: 'power3.out' });
-      gsap.from('.hero-sub',      { y: 30, opacity: 0, duration: 0.8, delay: 1.0, ease: 'power3.out' });
-      gsap.from('.hero-cta',      { y: 25, opacity: 0, duration: 0.7, delay: 1.3, ease: 'power3.out', stagger: 0.15 });
-      gsap.from('.hero-scroll',   { y: 15, opacity: 0, duration: 0.6, delay: 2.0, ease: 'power3.out' });
+      gsap.from('.hero-sub',      { y: 30, opacity: 0, duration: 0.8, delay: 1.0,  ease: 'power3.out' });
+      gsap.from('.hero-cta',      { y: 25, opacity: 0, duration: 0.7, delay: 1.3,  ease: 'power3.out', stagger: 0.15 });
+      gsap.from('.hero-scroll',   { y: 15, opacity: 0, duration: 0.6, delay: 2.0,  ease: 'power3.out' });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -91,7 +90,7 @@ export default function Hero() {
       const rect = section.getBoundingClientRect();
       if (spotRef.current) {
         spotRef.current.style.background =
-          `radial-gradient(650px circle at ${e.clientX - rect.left}px ${e.clientY - rect.top}px, rgba(108,99,255,0.10) 0%, rgba(0,245,212,0.04) 35%, transparent 65%)`;
+          `radial-gradient(650px circle at ${e.clientX - rect.left}px ${e.clientY - rect.top}px, rgba(108,99,255,0.10) 0%, rgba(108,99,255,0.03) 35%, transparent 65%)`;
       }
     };
     section.addEventListener('mousemove', onMove);
@@ -107,42 +106,38 @@ export default function Hero() {
       style={{
         position: 'relative',
         minHeight: '100vh',
+        paddingTop: '7rem',   /* 112px — clears the 64px fixed navbar with breathing room */
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
-        background: '#0a0a0f',
+        background: 'var(--bg-primary)',
       }}
     >
-      {/* Grid dots background */}
+      {/* Grid dots */}
       <div
         className="grid-bg"
-        style={{ position: 'absolute', inset: 0, opacity: 0.5, pointerEvents: 'none' }}
+        style={{ position: 'absolute', inset: 0, opacity: 0.45, pointerEvents: 'none' }}
       />
 
       {/* Gradient orbs */}
-      <div style={{
-        position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden',
-      }}>
+      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
         <div style={{
           position: 'absolute', width: '600px', height: '600px',
           borderRadius: '50%', top: '-200px', left: '-200px',
-          background: 'radial-gradient(circle, rgba(108,99,255,0.12) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(108,99,255,0.10) 0%, transparent 70%)',
         }} />
         <div style={{
           position: 'absolute', width: '500px', height: '500px',
           borderRadius: '50%', bottom: '-150px', right: '-150px',
-          background: 'radial-gradient(circle, rgba(0,245,212,0.08) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(108,99,255,0.06) 0%, transparent 70%)',
         }} />
       </div>
 
       {/* Spotlight overlay */}
       <div
         ref={spotRef}
-        style={{
-          position: 'absolute', inset: 0, pointerEvents: 'none',
-          transition: 'background 0.1s ease',
-        }}
+        style={{ position: 'absolute', inset: 0, pointerEvents: 'none', transition: 'background 0.1s ease' }}
       />
 
       {/* Content */}
@@ -168,7 +163,7 @@ export default function Hero() {
             fontSize: 'clamp(3.2rem, 10vw, 7rem)',
             lineHeight: 1.0,
             letterSpacing: '-0.01em',
-            background: 'linear-gradient(135deg, #E8E8E8 20%, #a89fff 60%, #00F5D4 100%)',
+            background: 'linear-gradient(135deg, var(--text-primary) 20%, #a89fff 60%, var(--teal) 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
@@ -183,7 +178,7 @@ export default function Hero() {
           style={{
             fontFamily: '"Fira Code", monospace',
             fontSize: 'clamp(1rem, 2.5vw, 1.35rem)',
-            color: '#b0b0c8',
+            color: 'var(--text-muted)',
             marginBottom: '2.8rem',
             minHeight: '2em',
           }}
@@ -211,12 +206,8 @@ export default function Hero() {
               boxShadow: '0 0 30px rgba(108,99,255,0.4)',
               transition: 'transform 0.2s, box-shadow 0.2s',
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = '0 0 50px rgba(108,99,255,0.65)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = '0 0 30px rgba(108,99,255,0.4)';
-            }}
+            onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 50px rgba(108,99,255,0.65)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 0 30px rgba(108,99,255,0.4)'; }}
           >
             View Projects
           </button>
@@ -232,15 +223,15 @@ export default function Hero() {
               letterSpacing: '0.1em',
               padding: '13px 34px',
               borderRadius: '8px',
-              border: '1.5px solid rgba(0,245,212,0.55)',
+              border: '1.5px solid rgba(108,99,255,0.5)',
               background: 'transparent',
-              color: '#00F5D4',
+              color: '#6C63FF',
               fontWeight: 500,
               transition: 'background 0.25s, box-shadow 0.25s',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(0,245,212,0.08)';
-              e.currentTarget.style.boxShadow  = '0 0 30px rgba(0,245,212,0.25)';
+              e.currentTarget.style.background = 'rgba(108,99,255,0.08)';
+              e.currentTarget.style.boxShadow  = '0 0 30px rgba(108,99,255,0.25)';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = 'transparent';
@@ -261,7 +252,7 @@ export default function Hero() {
           flexDirection: 'column', alignItems: 'center', gap: '8px',
         }}
       >
-        <span style={{ fontFamily: '"Fira Code", monospace', fontSize: '0.7rem', color: '#444460', letterSpacing: '0.2em' }}>
+        <span style={{ fontFamily: '"Fira Code", monospace', fontSize: '0.7rem', color: 'var(--scroll-label)', letterSpacing: '0.2em' }}>
           SCROLL
         </span>
         <div style={{

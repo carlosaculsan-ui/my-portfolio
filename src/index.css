@@ -1,45 +1,93 @@
 @import "tailwindcss";
 
-@theme {
-  --color-bg: #0a0a0f;
-  --color-card: #111118;
-  --color-accent: #6C63FF;
-  --color-teal: #00F5D4;
-  --color-text: #E8E8E8;
-  --color-muted: #666680;
-  --color-border: #1e1e2e;
+/* ── Tailwind v4: class-based dark mode ─────────── */
+@variant dark (.dark &);
 
+@theme {
+  --color-accent: #6C63FF;
   --font-mono: "Fira Code", monospace;
   --font-heading: "Oswald", sans-serif;
   --font-body: "Inter", sans-serif;
 }
 
-/* ── Reset & base ─────────────────────────────── */
+/* ── Light mode (default) ────────────────────────── */
+:root {
+  --bg-primary:       #f8f9ff;
+  --bg-secondary:     #eef0ff;
+  --bg-card:          #ffffff;
+  --bg-nav:           rgba(248, 249, 255, 0.94);
+  --bg-mobile-menu:   rgba(248, 249, 255, 0.98);
+  --text-primary:     #1a1a2e;
+  --text-secondary:   #4a4a6a;
+  --text-muted:       #7a7a9a;
+  --text-mono:        #5a5a8a;
+  --border-subtle:    rgba(108, 99, 255, 0.14);
+  --border-card:      rgba(108, 99, 255, 0.12);
+  --nav-border:       rgba(108, 99, 255, 0.15);
+  --nav-shadow:       0 4px 28px rgba(108, 99, 255, 0.09);
+  --accent:           #6C63FF;
+  --teal:             #00b4a6;
+  --scroll-label:     #9999bb;
+  --footer-bg:        #edeeff;
+  --footer-border:    rgba(108, 99, 255, 0.12);
+  --github-skill:     #2a2a4a;
+}
+
+/* ── Dark mode ────────────────────────────────────── */
+.dark {
+  --bg-primary:       #0a0a0f;
+  --bg-secondary:     #0d0d14;
+  --bg-card:          #111118;
+  --bg-nav:           rgba(10, 10, 15, 0.88);
+  --bg-mobile-menu:   rgba(10, 10, 15, 0.96);
+  --text-primary:     #e8e8e8;
+  --text-secondary:   #999ab5;
+  --text-muted:       #666680;
+  --text-mono:        #c8c8d8;
+  --border-subtle:    rgba(108, 99, 255, 0.12);
+  --border-card:      rgba(255, 255, 255, 0.06);
+  --nav-border:       rgba(108, 99, 255, 0.12);
+  --nav-shadow:       none;
+  --accent:           #6C63FF;
+  --teal:             #00F5D4;
+  --scroll-label:     #444460;
+  --footer-bg:        #080810;
+  --footer-border:    rgba(108, 99, 255, 0.10);
+  --github-skill:     #e8e8e8;
+}
+
+/* ── Smooth theme transition ─────────────────────── */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
   cursor: none;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
+/* ── Reset & base ─────────────────────────────────── */
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  background-color: #0a0a0f;
-  color: #e8e8e8;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   font-family: "Inter", sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── Scrollbar ──────────────────────────────────── */
+/* ── Scrollbar ────────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: #0a0a0f; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
 ::-webkit-scrollbar-thumb { background: #6C63FF; border-radius: 4px; }
 
-/* ── Custom cursor ─────────────────────────────── */
+/* ── Custom cursor ────────────────────────────────── */
 .cursor-dot {
   position: fixed;
   width: 8px;
@@ -49,7 +97,8 @@ body {
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
-  transition: width 0.15s ease, height 0.15s ease, background 0.15s ease;
+  /* Override the global transition so the dot snaps instantly */
+  transition: width 0.15s ease, height 0.15s ease, background 0.15s ease !important;
   mix-blend-mode: difference;
   will-change: left, top;
 }
@@ -63,39 +112,35 @@ body {
   pointer-events: none;
   z-index: 9998;
   transform: translate(-50%, -50%);
-  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease;
+  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease !important;
   will-change: left, top;
 }
 
 .cursor-dot.hovering {
   width: 14px;
   height: 14px;
-  background: #00F5D4;
+  background: var(--teal);
 }
 
 .cursor-ring.hovering {
   width: 56px;
   height: 56px;
-  border-color: rgba(0, 245, 212, 0.45);
+  border-color: rgba(108, 99, 255, 0.45);
 }
 
-/* ── Gradient text ─────────────────────────────── */
+/* ── Gradient text ────────────────────────────────── */
 .gradient-text {
-  background: linear-gradient(135deg, #6C63FF 0%, #00F5D4 100%);
+  background: linear-gradient(135deg, #6C63FF 0%, var(--teal) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* ── Glow utilities ─────────────────────────────── */
+/* ── Glow utilities ───────────────────────────────── */
 .glow-purple { box-shadow: 0 0 24px rgba(108, 99, 255, 0.45); }
-.glow-teal   { box-shadow: 0 0 24px rgba(0, 245, 212, 0.35); }
-.card-glow {
-  box-shadow: 0 0 0 1px rgba(108, 99, 255, 0.12),
-              0 8px 32px rgba(0, 0, 0, 0.5);
-}
+.card-glow   { box-shadow: 0 0 0 1px rgba(108, 99, 255, 0.12), 0 8px 32px rgba(0, 0, 0, 0.2); }
 
-/* ── Typewriter cursor ─────────────────────────── */
+/* ── Typewriter cursor ────────────────────────────── */
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0; }
@@ -111,19 +156,7 @@ body {
   animation: blink 1s step-end infinite;
 }
 
-/* ── Reveal (initial hidden state for GSAP) ────── */
-.reveal {
-  opacity: 0;
-  transform: translateY(48px);
-}
-
-/* ── Skill card hover glow ─────────────────────── */
-@keyframes skill-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(108, 99, 255, 0); }
-  50%       { box-shadow: 0 0 20px 4px rgba(108, 99, 255, 0.18); }
-}
-
-/* ── Floating animation for hero ──────────────── */
+/* ── Floating animation ───────────────────────────── */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-12px); }
@@ -131,33 +164,33 @@ body {
 
 .float-anim { animation: float 5s ease-in-out infinite; }
 
-/* ── Grid dots background ─────────────────────── */
+/* ── Grid dots background ─────────────────────────── */
 .grid-bg {
-  background-image:
-    radial-gradient(circle, rgba(108, 99, 255, 0.12) 1px, transparent 1px);
+  background-image: radial-gradient(
+    circle,
+    rgba(108, 99, 255, 0.12) 1px,
+    transparent 1px
+  );
   background-size: 36px 36px;
 }
 
-/* ── Wavy SVG fill ────────────────────────────── */
-.wave-fill-bg    { fill: #0a0a0f; }
-.wave-fill-card  { fill: #0d0d14; }
-
-/* ── Tilt card transform style ─────────────────── */
-.tilt-card {
-  transform-style: preserve-3d;
+/* ── Base card border (overridden by hover JS) ─────── */
+.project-card {
+  border: 1px solid var(--border-card) !important;
 }
 
-.tilt-card-inner {
-  transform: translateZ(20px);
+.contact-social-card {
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
 }
 
-/* ── Magnetic transition ───────────────────────── */
+/* ── Magnetic transition ──────────────────────────── */
 .magnetic {
-  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1) !important;
   display: inline-block;
 }
 
-/* ── Nav link underline animation ─────────────── */
+/* ── Nav link underline ───────────────────────────── */
 .nav-link {
   position: relative;
 }
@@ -169,28 +202,34 @@ body {
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #6C63FF, #00F5D4);
+  background: linear-gradient(90deg, #6C63FF, var(--teal));
   border-radius: 2px;
-  transition: width 0.3s ease;
+  transition: width 0.3s ease !important;
 }
 
 .nav-link:hover::after {
   width: 100%;
 }
 
-/* ── Tag badge ─────────────────────────────────── */
+/* ── Tech tag ─────────────────────────────────────── */
 .tech-tag {
   font-family: "Fira Code", monospace;
   font-size: 0.7rem;
   padding: 2px 10px;
   border-radius: 20px;
-  background: rgba(108, 99, 255, 0.12);
-  border: 1px solid rgba(108, 99, 255, 0.25);
-  color: #a89fff;
+  background: rgba(108, 99, 255, 0.10);
+  border: 1px solid rgba(108, 99, 255, 0.22);
+  color: #8a80ff;
   white-space: nowrap;
 }
 
-/* ── Section number prefix ─────────────────────── */
+.dark .tech-tag {
+  background: rgba(108, 99, 255, 0.12);
+  border-color: rgba(108, 99, 255, 0.25);
+  color: #a89fff;
+}
+
+/* ── Section number prefix ────────────────────────── */
 .section-number {
   font-family: "Fira Code", monospace;
   color: #6C63FF;
@@ -198,12 +237,30 @@ body {
   letter-spacing: 0.1em;
 }
 
-/* ── Noise overlay ─────────────────────────────── */
-.noise::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  opacity: 0.04;
+/* ── Theme toggle button ──────────────────────────── */
+.theme-toggle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-subtle);
+  background: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.25s ease !important;
+}
+
+.theme-toggle:hover {
+  border-color: #6C63FF;
+  color: #6C63FF;
+  box-shadow: 0 0 16px rgba(108, 99, 255, 0.3);
+}
+
+.theme-toggle.spinning {
+  transform: rotate(360deg) scale(1.15);
 }

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { Moon, Sun } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 const links = ['About', 'Skills', 'Projects', 'Contact'];
 
@@ -9,25 +11,18 @@ function MagneticLink({ label }) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-
     const onMove = (e) => {
       const rect = el.getBoundingClientRect();
       const cx   = rect.left + rect.width  / 2;
       const cy   = rect.top  + rect.height / 2;
       const dist = Math.hypot(e.clientX - cx, e.clientY - cy);
       if (dist < 90) {
-        const dx = (e.clientX - cx) * 0.28;
-        const dy = (e.clientY - cy) * 0.28;
-        gsap.to(el, { x: dx, y: dy, duration: 0.4, ease: 'power2.out' });
+        gsap.to(el, { x: (e.clientX - cx) * 0.28, y: (e.clientY - cy) * 0.28, duration: 0.4, ease: 'power2.out' });
       } else {
         gsap.to(el, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.5)' });
       }
     };
-
-    const onLeave = () => {
-      gsap.to(el, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.5)' });
-    };
-
+    const onLeave = () => gsap.to(el, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.5)' });
     window.addEventListener('mousemove', onMove);
     el.addEventListener('mouseleave', onLeave);
     return () => {
@@ -46,34 +41,105 @@ function MagneticLink({ label }) {
       ref={ref}
       href={`#${label.toLowerCase()}`}
       onClick={scroll}
-      className="nav-link magnetic text-sm tracking-widest uppercase"
-      style={{ fontFamily: '"Fira Code", monospace', color: '#c8c8d8' }}
+      className="nav-link magnetic"
+      style={{
+        fontFamily: '"Fira Code", monospace',
+        fontSize: '0.8rem',
+        letterSpacing: '0.12em',
+        textTransform: 'uppercase',
+        textDecoration: 'none',
+        color: 'var(--text-primary)',
+        transition: 'color 0.2s ease',
+      }}
+      onMouseEnter={(e) => { e.currentTarget.style.color = '#6C63FF'; }}
+      onMouseLeave={(e)  => { e.currentTarget.style.color = 'var(--text-primary)'; }}
     >
       {label}
     </a>
   );
 }
 
+function ThemeToggle() {
+  const { isDark, toggleTheme } = useTheme();
+  const [spinning, setSpinning] = useState(false);
+
+  const handleClick = () => {
+    setSpinning(true);
+    toggleTheme();
+    setTimeout(() => setSpinning(false), 420);
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      style={{
+        width: '36px',
+        height: '36px',
+        borderRadius: '50%',
+        border: '1.5px solid rgba(108,99,255,0.35)',
+        background: isDark ? 'rgba(108,99,255,0.12)' : 'rgba(108,99,255,0.08)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#6C63FF',
+        flexShrink: 0,
+        transform: spinning ? 'rotate(360deg) scale(1.15)' : 'rotate(0deg) scale(1)',
+        transition: spinning
+          ? 'transform 0.4s cubic-bezier(0.34,1.56,0.64,1)'
+          : 'transform 0.3s ease, box-shadow 0.2s ease',
+      }}
+      onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 14px rgba(108,99,255,0.4)'; }}
+      onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none'; }}
+    >
+      {isDark ? <Sun size={15} strokeWidth={2} /> : <Moon size={15} strokeWidth={2} />}
+    </button>
+  );
+}
+
 export default function Navbar() {
-  const navRef     = useRef(null);
-  const [open, setOpen] = useState(false);
+  const navRef = useRef(null);
+  const { isDark } = useTheme();
+  const [open,     setOpen]     = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    // Entrance animation
-    gsap.from(navRef.current, {
-      y: -70, opacity: 0, duration: 0.9, ease: 'power3.out', delay: 0.3,
+    // Use a GSAP context so StrictMode double-invocation is handled cleanly.
+    // Animate only `y` (slide in from above) — never animate opacity, which
+    // would leave the navbar invisible if the tween is interrupted.
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        navRef.current,
+        { y: -80 },
+        { y: 0, duration: 0.8, ease: 'power3.out', delay: 0.2 }
+      );
     });
 
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
+
+    return () => {
+      ctx.revert();
+      window.removeEventListener('scroll', onScroll);
+    };
   }, []);
 
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     setOpen(false);
   };
+
+  // Inline styles for background — never rely on Tailwind dark: for mission-critical
+  // visibility. isDark is read synchronously from context which reads the DOM class
+  // set by the inline script in index.html before React even loads.
+  const bgColor  = isDark ? '#0d0d1a' : '#f4f4ff';
+  const border   = isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,0,0.08)';
+  const shadow   = scrolled
+    ? isDark
+      ? '0 4px 24px rgba(0,0,0,0.5)'
+      : '0 4px 24px rgba(108,99,255,0.10)'
+    : 'none';
 
   return (
     <nav
@@ -84,23 +150,28 @@ export default function Navbar() {
         left: 0,
         right: 0,
         zIndex: 1000,
-        background: scrolled
-          ? 'rgba(10,10,15,0.88)'
-          : 'transparent',
-        backdropFilter: scrolled ? 'blur(18px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(108,99,255,0.12)' : 'none',
-        transition: 'background 0.4s ease, border-bottom 0.4s ease',
+        height: '64px',
+        display: 'flex',
+        alignItems: 'center',
+        backgroundColor: bgColor,
+        borderBottom: border,
+        boxShadow: shadow,
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        transition: 'background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease',
       }}
     >
+      {/* Inner container */}
       <div
         style={{
+          width: '100%',
           maxWidth: '1200px',
           margin: '0 auto',
           padding: '0 2rem',
-          height: '68px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
+          height: '100%',
         }}
       >
         {/* Logo */}
@@ -112,95 +183,89 @@ export default function Navbar() {
             fontWeight: 700,
             fontSize: '1.5rem',
             letterSpacing: '0.08em',
-            background: 'linear-gradient(135deg, #6C63FF, #00F5D4)',
+            background: 'linear-gradient(135deg, #6C63FF 0%, #00c4b4 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
             textDecoration: 'none',
+            flexShrink: 0,
           }}
         >
           YN
         </a>
 
-        {/* Desktop links */}
-        <div
-          className="hidden md:flex"
-          style={{ gap: '2.5rem', alignItems: 'center' }}
-        >
+        {/* Desktop links + controls */}
+        <div className="hidden md:flex" style={{ gap: '2.5rem', alignItems: 'center' }}>
           {links.map((l) => <MagneticLink key={l} label={l} />)}
+          <ThemeToggle />
           <a
             href="#contact"
             onClick={(e) => { e.preventDefault(); scrollTo('contact'); }}
             style={{
               fontFamily: '"Fira Code", monospace',
-              fontSize: '0.8rem',
-              padding: '8px 22px',
+              fontSize: '0.78rem',
+              padding: '7px 20px',
               borderRadius: '6px',
               border: '1.5px solid #6C63FF',
               color: '#6C63FF',
               textDecoration: 'none',
               letterSpacing: '0.08em',
               transition: 'background 0.25s, color 0.25s',
+              flexShrink: 0,
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = '#6C63FF';
-              e.currentTarget.style.color = '#fff';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'transparent';
-              e.currentTarget.style.color = '#6C63FF';
-            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = '#6C63FF'; e.currentTarget.style.color = '#fff'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#6C63FF'; }}
           >
             Hire Me
           </a>
         </div>
 
-        {/* Mobile hamburger */}
-        <button
-          className="md:hidden"
-          onClick={() => setOpen((v) => !v)}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: '#e8e8e8',
-            padding: '8px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '5px',
-          }}
-          aria-label="Toggle menu"
-        >
-          {[0, 1, 2].map((i) => (
-            <span
-              key={i}
-              style={{
-                display: 'block',
-                width: '24px',
-                height: '2px',
-                background: '#6C63FF',
-                borderRadius: '2px',
-                transition: 'transform 0.3s, opacity 0.3s',
-                transform:
-                  open && i === 0 ? 'translateY(7px) rotate(45deg)'
-                  : open && i === 2 ? 'translateY(-7px) rotate(-45deg)'
-                  : open && i === 1 ? 'scaleX(0)'
-                  : 'none',
-                opacity: open && i === 1 ? 0 : 1,
-              }}
-            />
-          ))}
-        </button>
+        {/* Mobile: toggle + hamburger */}
+        <div className="md:hidden" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <ThemeToggle />
+          <button
+            onClick={() => setOpen((v) => !v)}
+            style={{ background: 'none', border: 'none', padding: '8px', display: 'flex', flexDirection: 'column', gap: '5px' }}
+            aria-label="Toggle menu"
+          >
+            {[0, 1, 2].map((i) => (
+              <span
+                key={i}
+                style={{
+                  display: 'block',
+                  width: '22px',
+                  height: '2px',
+                  borderRadius: '2px',
+                  backgroundColor: isDark ? '#e8e8e8' : '#1a1a2e',
+                  transition: 'transform 0.3s, opacity 0.3s',
+                  transform:
+                    open && i === 0 ? 'translateY(7px) rotate(45deg)'
+                    : open && i === 2 ? 'translateY(-7px) rotate(-45deg)'
+                    : open && i === 1 ? 'scaleX(0)'
+                    : 'none',
+                  opacity: open && i === 1 ? 0 : 1,
+                }}
+              />
+            ))}
+          </button>
+        </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile dropdown menu */}
       <div
         style={{
-          background: 'rgba(10,10,15,0.96)',
-          backdropFilter: 'blur(18px)',
+          position: 'absolute',
+          top: '64px',
+          left: 0,
+          right: 0,
+          backgroundColor: isDark ? '#0d0d1a' : '#f4f4ff',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
           overflow: 'hidden',
           maxHeight: open ? '300px' : '0',
           transition: 'max-height 0.4s ease',
-          borderBottom: open ? '1px solid rgba(108,99,255,0.15)' : 'none',
+          borderBottom: open ? (isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,0,0.08)') : 'none',
+          zIndex: 999,
         }}
       >
         <div style={{ padding: '1.5rem 2rem', display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
@@ -212,11 +277,14 @@ export default function Navbar() {
               style={{
                 fontFamily: '"Fira Code", monospace',
                 fontSize: '0.9rem',
-                color: '#c8c8d8',
+                color: 'var(--text-primary)',
                 textDecoration: 'none',
                 letterSpacing: '0.15em',
                 textTransform: 'uppercase',
+                transition: 'color 0.2s',
               }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = '#6C63FF'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; }}
             >
               {l}
             </a>
