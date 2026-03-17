@@ -1,0 +1,209 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0a0a0f;
+  --color-card: #111118;
+  --color-accent: #6C63FF;
+  --color-teal: #00F5D4;
+  --color-text: #E8E8E8;
+  --color-muted: #666680;
+  --color-border: #1e1e2e;
+
+  --font-mono: "Fira Code", monospace;
+  --font-heading: "Oswald", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+/* ── Reset & base ─────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  cursor: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0a0a0f;
+  color: #e8e8e8;
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Scrollbar ──────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #0a0a0f; }
+::-webkit-scrollbar-thumb { background: #6C63FF; border-radius: 4px; }
+
+/* ── Custom cursor ─────────────────────────────── */
+.cursor-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: #6C63FF;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.15s ease, height 0.15s ease, background 0.15s ease;
+  mix-blend-mode: difference;
+  will-change: left, top;
+}
+
+.cursor-ring {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  border: 2px solid rgba(108, 99, 255, 0.55);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease;
+  will-change: left, top;
+}
+
+.cursor-dot.hovering {
+  width: 14px;
+  height: 14px;
+  background: #00F5D4;
+}
+
+.cursor-ring.hovering {
+  width: 56px;
+  height: 56px;
+  border-color: rgba(0, 245, 212, 0.45);
+}
+
+/* ── Gradient text ─────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, #6C63FF 0%, #00F5D4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Glow utilities ─────────────────────────────── */
+.glow-purple { box-shadow: 0 0 24px rgba(108, 99, 255, 0.45); }
+.glow-teal   { box-shadow: 0 0 24px rgba(0, 245, 212, 0.35); }
+.card-glow {
+  box-shadow: 0 0 0 1px rgba(108, 99, 255, 0.12),
+              0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Typewriter cursor ─────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1em;
+  background: #6C63FF;
+  margin-left: 3px;
+  vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+}
+
+/* ── Reveal (initial hidden state for GSAP) ────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(48px);
+}
+
+/* ── Skill card hover glow ─────────────────────── */
+@keyframes skill-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(108, 99, 255, 0); }
+  50%       { box-shadow: 0 0 20px 4px rgba(108, 99, 255, 0.18); }
+}
+
+/* ── Floating animation for hero ──────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+.float-anim { animation: float 5s ease-in-out infinite; }
+
+/* ── Grid dots background ─────────────────────── */
+.grid-bg {
+  background-image:
+    radial-gradient(circle, rgba(108, 99, 255, 0.12) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+/* ── Wavy SVG fill ────────────────────────────── */
+.wave-fill-bg    { fill: #0a0a0f; }
+.wave-fill-card  { fill: #0d0d14; }
+
+/* ── Tilt card transform style ─────────────────── */
+.tilt-card {
+  transform-style: preserve-3d;
+}
+
+.tilt-card-inner {
+  transform: translateZ(20px);
+}
+
+/* ── Magnetic transition ───────────────────────── */
+.magnetic {
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  display: inline-block;
+}
+
+/* ── Nav link underline animation ─────────────── */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #6C63FF, #00F5D4);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* ── Tag badge ─────────────────────────────────── */
+.tech-tag {
+  font-family: "Fira Code", monospace;
+  font-size: 0.7rem;
+  padding: 2px 10px;
+  border-radius: 20px;
+  background: rgba(108, 99, 255, 0.12);
+  border: 1px solid rgba(108, 99, 255, 0.25);
+  color: #a89fff;
+  white-space: nowrap;
+}
+
+/* ── Section number prefix ─────────────────────── */
+.section-number {
+  font-family: "Fira Code", monospace;
+  color: #6C63FF;
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+}
+
+/* ── Noise overlay ─────────────────────────────── */
+.noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.04;
+}
