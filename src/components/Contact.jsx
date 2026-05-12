@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react';
@@ -6,13 +6,14 @@ import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react';
 gsap.registerPlugin(ScrollTrigger);
 
 const socials = [
-  { label: 'GitHub',              href: 'https://github.com/',       icon: Github,   hover: '#6C63FF' },
-  { label: 'LinkedIn',            href: 'https://linkedin.com/in/',  icon: Linkedin, hover: '#0077B5' },
-  { label: 'yourname@email.com',  href: 'mailto:yourname@email.com', icon: Mail,     hover: '#00b4a6' },
+  { label: 'GitHub',                  href: 'https://github.com/carlosaculsan-ui',                   icon: Github,   hover: '#6C63FF' },
+  { label: 'LinkedIn',                href: 'https://www.linkedin.com/in/carlo-saculsan-63664240a/', icon: Linkedin, hover: '#0077B5' },
+  { label: 'carlosaculsan@gmail.com', href: 'https://mail.google.com/mail/?view=cm&fs=1&to=carlosaculsan@gmail.com', icon: Mail, hover: '#00b4a6' },
 ];
 
 export default function Contact() {
   const sectionRef = useRef(null);
+  const [primaryHover, setPrimaryHover] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -60,26 +61,36 @@ export default function Contact() {
             always open. Let's build something great together.
           </p>
 
-          {/* Primary CTA — always purple, works on both backgrounds */}
-          <a
-            href="mailto:yourname@email.com"
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: '10px',
-              fontFamily: '"Fira Code", monospace', fontSize: '0.9rem',
-              letterSpacing: '0.08em', padding: '15px 36px', borderRadius: '8px',
-              border: 'none', background: 'linear-gradient(135deg, #6C63FF, #5651d4)',
-              color: '#fff', textDecoration: 'none', fontWeight: 500,
-              boxShadow: '0 0 30px rgba(108,99,255,0.35)',
-              transition: 'box-shadow 0.25s, transform 0.2s',
-              marginBottom: '3.5rem',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 55px rgba(108,99,255,0.6)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 0 30px rgba(108,99,255,0.35)'; e.currentTarget.style.transform = 'translateY(0)'; }}
+          {/* Primary CTA */}
+          <div
+            style={{ display: 'inline-block', marginBottom: '3.5rem' }}
+            onMouseEnter={() => setPrimaryHover(true)}
+            onMouseLeave={() => setPrimaryHover(false)}
           >
-            <Mail size={16} />
-            Say Hello
-            <ArrowRight size={16} />
-          </a>
+            <a
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=carlosaculsan@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '10px',
+                fontFamily: '"Fira Code", monospace', fontSize: '0.9rem',
+                letterSpacing: '0.08em', padding: '15px 36px', borderRadius: '8px',
+                border: 'none', background: 'linear-gradient(135deg, #6C63FF, #5651d4)',
+                color: '#fff', textDecoration: 'none', fontWeight: 500,
+                boxShadow: '0 0 30px rgba(108,99,255,0.35)',
+                transition: 'box-shadow 0.25s, transform 0.2s, opacity 0.2s',
+                opacity: primaryHover ? 0.7 : 1,
+                pointerEvents: primaryHover ? 'none' : 'auto',
+                cursor: primaryHover ? 'not-allowed' : 'pointer',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 55px rgba(108,99,255,0.6)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 0 30px rgba(108,99,255,0.35)'; e.currentTarget.style.transform = 'translateY(0)'; }}
+            >
+              <Mail size={16} />
+              Say Hello
+              <ArrowRight size={16} />
+            </a>
+          </div>
         </div>
 
         {/* Divider */}
@@ -99,10 +110,14 @@ export default function Contact() {
                 style={{
                   display: 'flex', alignItems: 'center', gap: '8px',
                   fontFamily: '"Fira Code", monospace', fontSize: '0.82rem',
-                  color: 'var(--text-muted)', textDecoration: 'none',
+                  color: primaryHover ? s.hover : 'var(--text-muted)',
+                  textDecoration: 'none',
                   padding: '10px 20px', borderRadius: '8px',
-                  border: '1px solid var(--border-subtle)',
+                  border: '1px solid',
+                  borderColor: primaryHover ? `${s.hover}44` : 'var(--border-subtle)',
                   background: 'var(--bg-card)',
+                  boxShadow: primaryHover ? `0 0 20px ${s.hover}22` : 'none',
+                  transform: primaryHover ? 'translateY(-2px)' : 'translateY(0)',
                   transition: 'color 0.25s, border-color 0.25s, box-shadow 0.25s, transform 0.2s',
                 }}
                 onMouseEnter={(e) => {

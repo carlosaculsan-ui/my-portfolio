@@ -9,10 +9,10 @@ gsap.registerPlugin(ScrollTrigger);
 const projects = [
   {
     number: '01',
-    title: 'Real Estate Website',
+    title: 'Hanap.ph',
     description:
-      'A sleek frontend UI for a modern property listing platform. Features advanced search filters, an interactive map view, and smooth CSS clip-path transitions between property cards.',
-    tags: ['React', 'Tailwind CSS', 'CSS Clip-path', 'Framer Motion'],
+      'A full-stack home services booking platform for the Philippines. Features tasker vetting, live GPS tracking, in-app payments via GCash and PayMaya, e-wallet system, and an admin panel with real-time analytics.',
+    tags: ['React Vite', 'Supabase', 'Tailwind CSS', 'PayMongo', 'Groq AI', 'React Router', 'Vercel'],
     github: '#',
     live: '#',
     accent: '#6C63FF',
@@ -20,23 +20,21 @@ const projects = [
   },
   {
     number: '02',
-    title: 'Project Two',
-    description:
-      'A full-stack web application with real-time data synchronization, user authentication, and a polished dashboard interface. Built with a focus on performance and scalability.',
-    tags: ['React', 'Node.js', 'MongoDB', 'Socket.io'],
-    github: '#',
-    live: '#',
+    title: 'Coming Soon',
+    description: 'Something new is in the works. Stay tuned.',
+    tags: [],
+    github: null,
+    live: null,
     accent: '#00b4a6',
     gradient: 'linear-gradient(135deg, rgba(0,180,166,0.10) 0%, rgba(0,180,166,0.02) 100%)',
   },
   {
     number: '03',
-    title: 'Project Three',
-    description:
-      'An e-commerce frontend with animated product cards, a responsive checkout flow, and smooth page transitions. Optimized for Lighthouse scores of 95+ across all categories.',
-    tags: ['Next.js', 'TypeScript', 'Tailwind', 'Stripe'],
-    github: '#',
-    live: '#',
+    title: 'Coming Soon',
+    description: 'Something new is in the works. Stay tuned.',
+    tags: [],
+    github: null,
+    live: null,
     accent: '#e05580',
     gradient: 'linear-gradient(135deg, rgba(224,85,128,0.10) 0%, rgba(224,85,128,0.02) 100%)',
   },
@@ -103,36 +101,44 @@ function ProjectCard({ project }) {
           {project.description}
         </p>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.8rem' }}>
-          {project.tags.map((tag) => (
-            <span key={tag} className="tech-tag">{tag}</span>
-          ))}
-        </div>
+        {project.tags.length > 0 && (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.8rem' }}>
+            {project.tags.map((tag) => (
+              <span key={tag} className="tech-tag">{tag}</span>
+            ))}
+          </div>
+        )}
 
-        <div style={{ display: 'flex', gap: '1.2rem', alignItems: 'center' }}>
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ display: 'flex', alignItems: 'center', gap: '6px', fontFamily: '"Fira Code", monospace', fontSize: '0.78rem', color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 0.2s' }}
-            onMouseEnter={(e) => e.currentTarget.style.color = project.accent}
-            onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-muted)'}
-          >
-            <Github size={15} />
-            GitHub
-          </a>
-          <a
-            href={project.live}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ display: 'flex', alignItems: 'center', gap: '6px', fontFamily: '"Fira Code", monospace', fontSize: '0.78rem', color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 0.2s' }}
-            onMouseEnter={(e) => e.currentTarget.style.color = project.accent}
-            onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-muted)'}
-          >
-            <ExternalLink size={15} />
-            Live Demo
-          </a>
-        </div>
+        {(project.github || project.live) && (
+          <div style={{ display: 'flex', gap: '1.2rem', alignItems: 'center' }}>
+            {project.github && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: 'flex', alignItems: 'center', gap: '6px', fontFamily: '"Fira Code", monospace', fontSize: '0.78rem', color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 0.2s' }}
+                onMouseEnter={(e) => e.currentTarget.style.color = project.accent}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-muted)'}
+              >
+                <Github size={15} />
+                GitHub
+              </a>
+            )}
+            {project.live && (
+              <a
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: 'flex', alignItems: 'center', gap: '6px', fontFamily: '"Fira Code", monospace', fontSize: '0.78rem', color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 0.2s' }}
+                onMouseEnter={(e) => e.currentTarget.style.color = project.accent}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-muted)'}
+              >
+                <ExternalLink size={15} />
+                Live Demo
+              </a>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

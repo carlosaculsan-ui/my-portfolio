@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import passportPic from '../assets/Passport pic.jpg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -121,12 +122,14 @@ export default function About() {
               {/* Avatar */}
               <div style={{
                 width: '100px', height: '100px', borderRadius: '50%',
-                background: 'linear-gradient(135deg, #6C63FF 0%, var(--teal) 100%)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '2.5rem', fontFamily: '"Oswald", sans-serif', fontWeight: 700,
-                color: '#fff', boxShadow: '0 0 30px rgba(108,99,255,0.35)',
+                overflow: 'hidden',
+                boxShadow: '0 0 30px rgba(108,99,255,0.35)',
               }}>
-                YN
+                <img
+                  src={passportPic}
+                  alt="Passport pic"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
               </div>
 
               <div style={{ textAlign: 'center' }}>
