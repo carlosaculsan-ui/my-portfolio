@@ -10,24 +10,27 @@ const skills = [
   { name: 'CSS3',       icon: '🎨', color: '#1572B6', bg: 'rgba(21,114,182,0.08)',  border: 'rgba(21,114,182,0.25)' },
   { name: 'JavaScript', icon: '⚡', color: '#c8a800', bg: 'rgba(200,168,0,0.07)',   border: 'rgba(200,168,0,0.30)'  },
   { name: 'React',      icon: '⚛️', color: '#00a8cc', bg: 'rgba(0,168,204,0.07)',   border: 'rgba(0,168,204,0.25)'  },
+  { name: 'Vite',       icon: '⚡', color: '#a259ff', bg: 'rgba(162,89,255,0.07)',  border: 'rgba(162,89,255,0.25)' },
   { name: 'Tailwind',   icon: '🌊', color: '#0ea5d4', bg: 'rgba(14,165,212,0.07)',  border: 'rgba(14,165,212,0.25)' },
   { name: 'Node.js',    icon: '🟢', color: '#3d8b40', bg: 'rgba(61,139,64,0.08)',   border: 'rgba(61,139,64,0.25)'  },
+  { name: 'Express.js', icon: '🚂', color: '#8a8a8a', bg: 'rgba(138,138,138,0.07)', border: 'rgba(138,138,138,0.25)' },
+  { name: 'Supabase',   icon: '🗄️', color: '#3ecf8e', bg: 'rgba(62,207,142,0.07)',  border: 'rgba(62,207,142,0.25)' },
+  { name: 'Socket.io',  icon: '🔌', color: null,      bg: null,                    border: null                     },
+  { name: 'Groq AI',    icon: '🤖', color: '#f55036', bg: 'rgba(245,80,54,0.07)',   border: 'rgba(245,80,54,0.25)'  },
   { name: 'Git',        icon: '🔀', color: '#E05030', bg: 'rgba(224,80,48,0.07)',   border: 'rgba(224,80,48,0.25)'  },
   { name: 'GitHub',     icon: '🐙', color: null,      bg: null,                     border: null                    },
+  { name: 'Vercel',     icon: '▲',  color: null,      bg: null,                    border: null                     },
   { name: 'Figma',      icon: '✏️', color: '#E0461A', bg: 'rgba(224,70,26,0.07)',   border: 'rgba(224,70,26,0.25)'  },
 ];
 
 function SkillCard({ skill }) {
   const { isDark } = useTheme();
 
-  // GitHub needs theme-aware color to stay visible on both backgrounds
-  const color  = skill.name === 'GitHub' ? (isDark ? '#b0b0cc' : '#2a2a4a') : skill.color;
-  const bg     = skill.name === 'GitHub'
-    ? (isDark ? 'rgba(176,176,204,0.06)' : 'rgba(42,42,74,0.06)')
-    : (isDark ? skill.bg : 'var(--bg-card)');
-  const border = skill.name === 'GitHub'
-    ? (isDark ? 'rgba(176,176,204,0.18)' : 'rgba(42,42,74,0.18)')
-    : skill.border;
+  // null color = neutral skill (GitHub, Vercel, Socket.io) — theme-aware to stay visible on both backgrounds
+  const isNeutral = skill.color === null;
+  const color  = isNeutral ? (isDark ? '#b0b0cc' : '#2a2a4a') : skill.color;
+  const bg     = isNeutral ? (isDark ? 'rgba(176,176,204,0.06)' : 'rgba(42,42,74,0.06)') : (isDark ? skill.bg : 'var(--bg-card)');
+  const border = isNeutral ? (isDark ? 'rgba(176,176,204,0.18)' : 'rgba(42,42,74,0.18)') : skill.border;
 
   const onEnter = (e) => {
     gsap.to(e.currentTarget, { y: -8, scale: 1.05, duration: 0.3, ease: 'power2.out' });
