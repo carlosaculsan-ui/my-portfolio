@@ -5,7 +5,7 @@ import { Download } from 'lucide-react';
 const SUBTITLE_TEXTS = [
   'I build things that people actually use.',
   'I bring ideas to life.',
-  'I design and develop interactive game experiences.',
+  "I'm always learning, always building.",
 ];
 
 function useMagnetic() {
@@ -159,11 +159,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="hero-scroll">
-        <span className="scroll-label">SCROLL</span>
-        <div className="scroll-line" />
-      </div>
     </section>
   );
 }

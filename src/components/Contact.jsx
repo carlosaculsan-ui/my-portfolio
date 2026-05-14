@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Github, Linkedin, Mail, ArrowRight, Download } from 'lucide-react';
@@ -6,20 +6,29 @@ import { Github, Linkedin, Mail, ArrowRight, Download } from 'lucide-react';
 gsap.registerPlugin(ScrollTrigger);
 
 const socials = [
-  { label: 'GitHub',                  href: 'https://github.com/carlosaculsan-ui',                                                icon: Github,   hover: '#6C63FF' },
-  { label: 'LinkedIn',                href: 'https://www.linkedin.com/in/carlo-saculsan-63664240a/',                              icon: Linkedin, hover: '#0077B5' },
-  { label: 'carlosaculsan@gmail.com', href: 'https://mail.google.com/mail/?view=cm&fs=1&to=carlosaculsan@gmail.com',              icon: Mail,     hover: '#00b4a6' },
+  { label: 'GitHub',   href: 'https://github.com/carlosaculsan-ui',                  icon: Github,   hover: '#6C63FF' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/carlo-saculsan-63664240a/', icon: Linkedin, hover: '#0077B5' },
 ];
+
+const btnHover = (e) => {
+  e.currentTarget.style.background  = 'rgba(108,99,255,0.08)';
+  e.currentTarget.style.boxShadow   = '0 0 30px rgba(108,99,255,0.25)';
+  e.currentTarget.style.transform   = 'translateY(-2px)';
+};
+const btnLeave = (e) => {
+  e.currentTarget.style.background  = 'transparent';
+  e.currentTarget.style.boxShadow   = 'none';
+  e.currentTarget.style.transform   = '';
+};
 
 export default function Contact() {
   const sectionRef = useRef(null);
-  const [primaryHover, setPrimaryHover] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.contact-header',  { scrollTrigger: { trigger: '.contact-header',  start: 'top 85%' }, y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' });
-      gsap.from('.contact-body',    { scrollTrigger: { trigger: '.contact-body',    start: 'top 82%' }, y: 30, opacity: 0, duration: 0.8, ease: 'power3.out' });
-      gsap.from('.contact-social',  { scrollTrigger: { trigger: '.contact-socials', start: 'top 82%' }, x: -30, opacity: 0, duration: 0.6, stagger: 0.12, ease: 'power3.out' });
+      gsap.from('.contact-header', { scrollTrigger: { trigger: '.contact-header', start: 'top 85%' }, y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' });
+      gsap.from('.contact-body',   { scrollTrigger: { trigger: '.contact-body',   start: 'top 82%' }, y: 30, opacity: 0, duration: 0.8, ease: 'power3.out' });
+      gsap.from('.contact-social', { scrollTrigger: { trigger: '.contact-socials',start: 'top 82%' }, x: -30, opacity: 0, duration: 0.6, stagger: 0.12, ease: 'power3.out' });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -43,7 +52,6 @@ export default function Contact() {
 
         {/* Header */}
         <div className="contact-header">
-          <p className="section-number" style={{ marginBottom: '0.5rem' }}>04. &nbsp;contact</p>
           <h2 className="heading-contact">
             Get In <span className="gradient-text">Touch</span>
           </h2>
@@ -58,41 +66,28 @@ export default function Contact() {
             always open. Let's build something great together.
           </p>
 
-          {/* CTAs row */}
+          {/* CTAs — both outlined, equal visual weight */}
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '3.5rem' }}>
-            {/* Say Hello — onMouseEnter/Leave needed to sync with social card highlight */}
-            <div
-              onMouseEnter={() => setPrimaryHover(true)}
-              onMouseLeave={() => setPrimaryHover(false)}
+            <a
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=carlosaculsan@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', textDecoration: 'none', letterSpacing: '0.08em' }}
+              onMouseEnter={btnHover}
+              onMouseLeave={btnLeave}
             >
-              <a
-                href="https://mail.google.com/mail/?view=cm&fs=1&to=carlosaculsan@gmail.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary"
-                style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '10px',
-                  textDecoration: 'none', letterSpacing: '0.08em',
-                  opacity: primaryHover ? 0.7 : 1,
-                  transition: 'box-shadow 0.25s, transform 0.2s, opacity 0.2s',
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 55px rgba(108,99,255,0.6)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = ''; e.currentTarget.style.transform = ''; }}
-              >
-                <Mail size={16} />
-                Say Hello
-                <ArrowRight size={16} />
-              </a>
-            </div>
-
-            {/* Download CV */}
+              <Mail size={16} />
+              Say Hello
+              <ArrowRight size={16} />
+            </a>
             <a
               href="/Carlo_Saculsan_Resume.pdf"
               download
               className="btn-secondary"
               style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', textDecoration: 'none', letterSpacing: '0.08em' }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(108,99,255,0.08)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(108,99,255,0.25)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = ''; }}
+              onMouseEnter={btnHover}
+              onMouseLeave={btnLeave}
             >
               <Download size={16} />
               Download CV
@@ -100,37 +95,31 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="contact-divider" />
-
-        {/* Social links */}
-        <div className="contact-socials contact-socials-row flex justify-center gap-6 flex-wrap">
+        {/* Social links — same weight as CTAs */}
+        <div className="contact-socials contact-socials-row flex justify-center gap-4 flex-wrap">
           {socials.map((s) => {
             const Icon = s.icon;
             return (
               <a
                 key={s.label}
                 href={s.href}
-                target={s.href.startsWith('mailto') ? undefined : '_blank'}
+                target="_blank"
                 rel="noopener noreferrer"
-                className="contact-social"
-                style={primaryHover ? {
-                  color: s.hover,
-                  borderColor: `${s.hover}44`,
-                  boxShadow: `0 0 20px ${s.hover}22`,
-                  transform: 'translateY(-2px)',
-                } : {}}
+                className="btn-secondary"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', textDecoration: 'none', letterSpacing: '0.08em' }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = s.hover;
-                  e.currentTarget.style.borderColor = `${s.hover}44`;
-                  e.currentTarget.style.boxShadow = `0 0 20px ${s.hover}22`;
-                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.background  = `${s.hover}15`;
+                  e.currentTarget.style.borderColor = `${s.hover}88`;
+                  e.currentTarget.style.color       = s.hover;
+                  e.currentTarget.style.boxShadow   = `0 0 30px ${s.hover}33`;
+                  e.currentTarget.style.transform   = 'translateY(-2px)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = '';
+                  e.currentTarget.style.background  = 'transparent';
                   e.currentTarget.style.borderColor = '';
-                  e.currentTarget.style.boxShadow = '';
-                  e.currentTarget.style.transform = '';
+                  e.currentTarget.style.color       = '';
+                  e.currentTarget.style.boxShadow   = 'none';
+                  e.currentTarget.style.transform   = '';
                 }}
               >
                 <Icon size={15} />

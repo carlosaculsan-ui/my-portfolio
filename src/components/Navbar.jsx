@@ -151,58 +151,63 @@ export default function Navbar() {
         transition: 'background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease',
       }}
     >
-      {/* Inner container */}
-      <div className="flex items-center justify-between w-full h-full px-5 md:px-8 mx-auto max-w-[1200px]">
+      {/* Inner container — 3-col: logo | links (true center) | controls */}
+      <div className="flex items-center w-full h-full px-5 md:px-8 mx-auto max-w-[1200px]">
 
-        {/* Logo */}
-        <a
-          href="#hero"
-          onClick={(e) => { e.preventDefault(); scrollTo('hero'); }}
-          className="flex items-center flex-shrink-0 no-underline"
-          aria-label="Home"
-        >
-          <svg width="38" height="42" viewBox="-4 -2 66 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="1"  y="1"  width="36" height="36" stroke="#5b7ea8" strokeWidth="2.6" fill="none" transform="rotate(13 19 19)" />
-            <rect x="21" y="31" width="36" height="36" stroke="#c07858" strokeWidth="2.6" fill="none" transform="rotate(13 39 49)" />
-          </svg>
-        </a>
+        {/* Left: Logo */}
+        <div className="flex-1">
+          <a
+            href="#hero"
+            onClick={(e) => { e.preventDefault(); scrollTo('hero'); }}
+            className="flex items-center no-underline"
+            aria-label="Home"
+          >
+            <svg width="38" height="42" viewBox="-4 -2 66 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1"  y="1"  width="36" height="36" stroke="#5b7ea8" strokeWidth="2.6" fill="none" transform="rotate(13 19 19)" />
+              <rect x="21" y="31" width="36" height="36" stroke="#c07858" strokeWidth="2.6" fill="none" transform="rotate(13 39 49)" />
+            </svg>
+          </a>
+        </div>
 
-        {/* Desktop links + controls */}
-        <div className="hidden md:flex items-center gap-10">
+        {/* Center: Desktop nav links */}
+        <div className="hidden md:flex items-center gap-14">
           {links.map((l) => <MagneticLink key={l} label={l} />)}
+        </div>
+
+        {/* Right: controls (desktop + mobile) */}
+        <div className="flex-1 flex items-center justify-end gap-4">
           <a
             href="#contact"
             onClick={(e) => { e.preventDefault(); scrollTo('contact'); }}
-            className="btn-hire"
+            className="btn-hire hidden md:block"
           >
             Hire Me
           </a>
           <ThemeToggle />
-        </div>
-
-        {/* Mobile: toggle + hamburger */}
-        <div className="md:hidden flex items-center gap-3">
-          <ThemeToggle />
+          {/* Mobile-only hamburger */}
           <button
+            className="md:hidden"
             onClick={() => setOpen((v) => !v)}
-            style={{ background: 'none', border: 'none', padding: '8px', display: 'flex', flexDirection: 'column', gap: '5px' }}
+            style={{ background: 'none', border: 'none', padding: '8px' }}
             aria-label="Toggle menu"
           >
-            {[0, 1, 2].map((i) => (
-              <span
-                key={i}
-                style={{
-                  display: 'block', width: '22px', height: '2px', borderRadius: '2px',
-                  backgroundColor: isDark ? '#e8e8e8' : '#1a1a2e',
-                  transition: 'transform 0.3s, opacity 0.3s',
-                  transform:
-                    open && i === 0 ? 'translateY(7px) rotate(45deg)'
-                    : open && i === 2 ? 'translateY(-7px) rotate(-45deg)'
-                    : open && i === 1 ? 'scaleX(0)' : 'none',
-                  opacity: open && i === 1 ? 0 : 1,
-                }}
-              />
-            ))}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              {[0, 1, 2].map((i) => (
+                <span
+                  key={i}
+                  style={{
+                    display: 'block', width: '22px', height: '2px', borderRadius: '2px',
+                    backgroundColor: isDark ? '#e8e8e8' : '#1a1a2e',
+                    transition: 'transform 0.3s, opacity 0.3s',
+                    transform:
+                      open && i === 0 ? 'translateY(7px) rotate(45deg)'
+                      : open && i === 2 ? 'translateY(-7px) rotate(-45deg)'
+                      : open && i === 1 ? 'scaleX(0)' : 'none',
+                    opacity: open && i === 1 ? 0 : 1,
+                  }}
+                />
+              ))}
+            </div>
           </button>
         </div>
       </div>

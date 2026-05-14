@@ -249,7 +249,7 @@ body {
 }
 
 .skill-name {
-  font-family: "Fira Code", monospace;
+  font-family: "Inter", sans-serif;
   font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: 0.05em;
@@ -504,7 +504,7 @@ body {
 
 /* ── Mobile nav links ────────────────────────────────── */
 .mobile-nav-link {
-  font-family: "Fira Code", monospace;
+  font-family: "Inter", sans-serif;
   font-size: 0.9rem;
   color: var(--text-primary);
   text-decoration: none;
@@ -560,7 +560,7 @@ body {
 }
 
 .hero-sub {
-  font-family: "Fira Code", monospace;
+  font-family: "Inter", sans-serif;
   font-size: clamp(1rem, 2.5vw, 1.35rem);
   color: var(--text-muted);
   margin-bottom: 2.8rem;
@@ -627,11 +627,11 @@ body {
 }
 
 .about-card {
-  width: 280px;
-  height: 340px;
+  width: min(340px, 100%);
   border-radius: 16px;
   position: relative;
   background: var(--bg-card);
+  padding: 2.5rem 2rem;
   border: 1px solid var(--border-card);
   box-shadow: 0 0 60px rgba(108, 99, 255, 0.1);
   display: flex;
@@ -642,11 +642,11 @@ body {
 }
 
 .about-avatar {
-  width: 100px;
-  height: 100px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: 0 0 30px rgba(108, 99, 255, 0.35);
+  box-shadow: 0 0 40px rgba(108, 99, 255, 0.4);
 }
 
 .about-name {

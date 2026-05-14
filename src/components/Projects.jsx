@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import VanillaTilt from 'vanilla-tilt';
@@ -14,7 +14,7 @@ const projects = [
       'A full-stack home services booking platform for the Philippines. Features tasker vetting, live GPS tracking, in-app payments via GCash and PayMaya, e-wallet system, and an admin panel with real-time analytics.',
     tags: ['React Vite', 'Supabase', 'Tailwind CSS', 'PayMongo', 'Groq AI', 'React Router', 'Vercel'],
     github: '#',
-    live: '#',
+    live: 'https://home-service-web-five.vercel.app/',
     accent: '#6C63FF',
     gradient: 'linear-gradient(135deg, rgba(108,99,255,0.10) 0%, rgba(108,99,255,0.02) 100%)',
   },
@@ -25,7 +25,7 @@ const projects = [
       'A two-sided rental marketplace for the Philippines connecting renters and landlords. Features real-time messaging, listing management, AI-powered search assistant, and an admin moderation dashboard.',
     tags: ['React Vite', 'Supabase', 'Tailwind CSS', 'Express.js', 'Socket.io', 'Groq AI', 'Render', 'Vercel'],
     github: '#',
-    live: '#',
+    live: 'https://nestph.vercel.app/',
     accent: '#00b4a6',
     gradient: 'linear-gradient(135deg, rgba(0,180,166,0.10) 0%, rgba(0,180,166,0.02) 100%)',
   },
@@ -43,6 +43,7 @@ const projects = [
 
 function ProjectCard({ project }) {
   const cardRef = useRef(null);
+  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     const el = cardRef.current;
@@ -55,9 +56,30 @@ function ProjectCard({ project }) {
     <div
       ref={cardRef}
       className="project-card"
-      onMouseEnter={(e) => { e.currentTarget.style.setProperty('border-color', `${project.accent}55`); }}
-      onMouseLeave={(e) => { e.currentTarget.style.removeProperty('border-color'); }}
+      onClick={() => { if (project.live) window.open(project.live, '_blank', 'noopener,noreferrer'); }}
+      onMouseEnter={(e) => { e.currentTarget.style.setProperty('border-color', `${project.accent}55`); if (project.live) setHovered(true); }}
+      onMouseLeave={(e) => { e.currentTarget.style.removeProperty('border-color'); setHovered(false); }}
     >
+      {/* Corner badge — signals the card is clickable on hover */}
+      {project.live && (
+        <div style={{
+          position: 'absolute', top: '14px', right: '14px', zIndex: 2,
+          display: 'flex', alignItems: 'center', gap: '5px',
+          padding: '5px 10px', borderRadius: '999px',
+          background: `${project.accent}22`,
+          border: `1px solid ${project.accent}55`,
+          color: project.accent,
+          fontFamily: '"Fira Code", monospace', fontSize: '0.7rem', letterSpacing: '0.1em',
+          opacity: hovered ? 1 : 0,
+          transform: hovered ? 'translateY(0)' : 'translateY(-6px)',
+          transition: 'opacity 0.25s ease, transform 0.25s ease',
+          pointerEvents: 'none',
+        }}>
+          <ExternalLink size={11} strokeWidth={2} />
+          Visit Site
+        </div>
+      )}
+
       {/* Background gradient — dynamic per project */}
       <div style={{ position: 'absolute', inset: 0, background: project.gradient, pointerEvents: 'none', borderRadius: '16px' }} />
 
@@ -91,6 +113,7 @@ function ProjectCard({ project }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="project-link"
+                onClick={(e) => e.stopPropagation()}
                 onMouseEnter={(e) => { e.currentTarget.style.color = project.accent; }}
                 onMouseLeave={(e) => { e.currentTarget.style.color = ''; }}
               >
@@ -104,6 +127,7 @@ function ProjectCard({ project }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="project-link"
+                onClick={(e) => e.stopPropagation()}
                 onMouseEnter={(e) => { e.currentTarget.style.color = project.accent; }}
                 onMouseLeave={(e) => { e.currentTarget.style.color = ''; }}
               >
@@ -146,7 +170,6 @@ export default function Projects() {
 
       <div className="section-container">
         <div className="projects-header section-header">
-          <p className="section-number" style={{ marginBottom: '0.5rem' }}>03. &nbsp;projects</p>
           <h2 className="heading-section">
             Things I've <span className="gradient-text">Built</span>
           </h2>

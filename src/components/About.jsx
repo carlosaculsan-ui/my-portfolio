@@ -51,9 +51,6 @@ export default function About() {
 
           {/* Left: text */}
           <div>
-            <p className="about-label section-number" style={{ marginBottom: '0.5rem' }}>
-              01. &nbsp;about me
-            </p>
             <h2 className="about-heading">
               A Little About <span className="gradient-text">Me</span>
             </h2>
@@ -110,7 +107,7 @@ export default function About() {
 
               <div className="text-center">
                 <p className="about-name">Carlo Saculsan</p>
-                <p className="about-role">&lt; Frontend Developer /&gt;</p>
+                <p className="about-role">Quezon City, Philippines 🇵🇭</p>
               </div>
 
               {/* Status badge */}
