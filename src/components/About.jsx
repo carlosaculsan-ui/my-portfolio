@@ -6,10 +6,10 @@ import passportPic from '../assets/Passport pic.jpg';
 gsap.registerPlugin(ScrollTrigger);
 
 const bullets = [
-  { emoji: '🚀', text: 'Passionate about building fast, accessible, pixel-perfect interfaces.' },
-  { emoji: '🎨', text: 'Design-driven developer — I care as much about aesthetics as I do about code quality.' },
-  { emoji: '🛠️', text: 'Love working across the stack, from RESTful APIs to polished front-end animations.' },
-  { emoji: '📚', text: 'Continuous learner — currently exploring Three.js and WebGL for immersive web experiences.' },
+  { emoji: '🚀', text: 'Currently seeking OJT opportunities where I can contribute, grow, and learn from real-world projects.' },
+  { emoji: '🤝', text: 'Strong team player — I communicate well, adapt quickly, and work great in collaborative environments.' },
+  { emoji: '🧠', text: 'Vibe coder at heart — I leverage AI tools and prompting to build smarter and ship faster.' },
+  { emoji: '🎨', text: 'Design-driven developer — I care as much about how things look as how they work.' },
   { emoji: '🎮', text: "When I'm not coding, I'm gaming or tinkering with side projects." },
 ];
 
@@ -56,13 +56,10 @@ export default function About() {
             </h2>
             <div className="about-line" />
             <p className="about-bio">
-              I'm a front-end focused developer who loves crafting beautiful, responsive
-              web experiences. With a solid foundation in React and modern CSS, I blend
-              clean code with thoughtful design to build products that users actually
-              enjoy interacting with.
-              <br /><br />
-              I thrive at the intersection of design and engineering — where a well-placed
-              animation or a perfectly chosen font weight makes all the difference.
+              I'm a Computer Science student who loves building things for the web — from
+              crafting clean, responsive interfaces to integrating real-world features that
+              actually work. I pick up new tools and technologies fast, and I genuinely
+              enjoy the process of figuring things out.
             </p>
 
             <ul className="about-bullets" style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>

@@ -152,20 +152,17 @@ export default function Navbar() {
       }}
     >
       {/* Inner container — 3-col: logo | links (true center) | controls */}
-      <div className="flex items-center w-full h-full px-5 md:px-8 mx-auto max-w-[1200px]">
+      <div className="flex items-center w-full h-full pl-0 pr-5 md:pl-1 md:pr-8 mx-auto max-w-[1200px]">
 
         {/* Left: Logo */}
         <div className="flex-1">
           <a
             href="#hero"
             onClick={(e) => { e.preventDefault(); scrollTo('hero'); }}
-            className="flex items-center no-underline"
+            className="nav-logo"
             aria-label="Home"
           >
-            <svg width="38" height="42" viewBox="-4 -2 66 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="1"  y="1"  width="36" height="36" stroke="#5b7ea8" strokeWidth="2.6" fill="none" transform="rotate(13 19 19)" />
-              <rect x="21" y="31" width="36" height="36" stroke="#c07858" strokeWidth="2.6" fill="none" transform="rotate(13 39 49)" />
-            </svg>
+            CS
           </a>
         </div>
 

@@ -61,9 +61,9 @@ export default function Contact() {
         {/* Body */}
         <div className="contact-body">
           <p className="contact-body-text">
-            I'm currently open to new opportunities — whether it's a full-time role,
-            freelance project, or just a chat about web development. My inbox is
-            always open. Let's build something great together.
+            I'm currently open to new opportunities — whether it's an OJT internship,
+            full-time role, freelance project, or just a chat about web development.
+            My inbox is always open. Let's build something great together.
           </p>
 
           {/* CTAs — both outlined, equal visual weight */}
@@ -90,7 +90,7 @@ export default function Contact() {
               onMouseLeave={btnLeave}
             >
               <Download size={16} />
-              Download CV
+              Download Resume
             </a>
           </div>
         </div>

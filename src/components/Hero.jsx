@@ -154,7 +154,7 @@ export default function Hero() {
             }}
           >
             <Download size={15} />
-            Download CV
+            Download Resume
           </a>
         </div>
       </div>
