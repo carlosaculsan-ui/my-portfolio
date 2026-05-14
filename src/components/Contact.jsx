@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react';
+import { Github, Linkedin, Mail, ArrowRight, Download } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -58,29 +58,44 @@ export default function Contact() {
             always open. Let's build something great together.
           </p>
 
-          {/* Primary CTA — onMouseEnter/Leave needed to sync with social card highlight */}
-          <div
-            style={{ display: 'inline-block', marginBottom: '3.5rem' }}
-            onMouseEnter={() => setPrimaryHover(true)}
-            onMouseLeave={() => setPrimaryHover(false)}
-          >
-            <a
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=carlosaculsan@gmail.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary"
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: '10px',
-                textDecoration: 'none', letterSpacing: '0.08em',
-                opacity: primaryHover ? 0.7 : 1,
-                transition: 'box-shadow 0.25s, transform 0.2s, opacity 0.2s',
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 55px rgba(108,99,255,0.6)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.boxShadow = ''; e.currentTarget.style.transform = ''; }}
+          {/* CTAs row */}
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '3.5rem' }}>
+            {/* Say Hello — onMouseEnter/Leave needed to sync with social card highlight */}
+            <div
+              onMouseEnter={() => setPrimaryHover(true)}
+              onMouseLeave={() => setPrimaryHover(false)}
             >
-              <Mail size={16} />
-              Say Hello
-              <ArrowRight size={16} />
+              <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=carlosaculsan@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '10px',
+                  textDecoration: 'none', letterSpacing: '0.08em',
+                  opacity: primaryHover ? 0.7 : 1,
+                  transition: 'box-shadow 0.25s, transform 0.2s, opacity 0.2s',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 55px rgba(108,99,255,0.6)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = ''; e.currentTarget.style.transform = ''; }}
+              >
+                <Mail size={16} />
+                Say Hello
+                <ArrowRight size={16} />
+              </a>
+            </div>
+
+            {/* Download CV */}
+            <a
+              href="/Carlo_Saculsan_Resume.pdf"
+              download
+              className="btn-secondary"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', textDecoration: 'none', letterSpacing: '0.08em' }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(108,99,255,0.08)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(108,99,255,0.25)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = ''; }}
+            >
+              <Download size={16} />
+              Download CV
             </a>
           </div>
         </div>

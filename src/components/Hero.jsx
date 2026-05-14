@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { Download } from 'lucide-react';
 
 const SUBTITLE_TEXTS = [
   'I build things that people actually use.',
@@ -41,6 +42,7 @@ export default function Hero() {
   const [phase,         setPhase]         = useState('typing');
   const btn1Ref = useMagnetic();
   const btn2Ref = useMagnetic();
+  const btn3Ref = useMagnetic();
 
   // Typewriter effect
   useEffect(() => {
@@ -135,6 +137,25 @@ export default function Hero() {
           >
             Contact Me
           </button>
+
+          <a
+            ref={btn3Ref}
+            href="/Carlo_Saculsan_Resume.pdf"
+            download
+            className="hero-cta magnetic btn-secondary"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(108,99,255,0.08)';
+              e.currentTarget.style.boxShadow  = '0 0 30px rgba(108,99,255,0.25)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent';
+              e.currentTarget.style.boxShadow  = 'none';
+            }}
+          >
+            <Download size={15} />
+            Download CV
+          </a>
         </div>
       </div>
 
