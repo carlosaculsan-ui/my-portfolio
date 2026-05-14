@@ -20,11 +20,12 @@ const projects = [
   },
   {
     number: '02',
-    title: 'Coming Soon',
-    description: 'Something new is in the works. Stay tuned.',
-    tags: [],
-    github: null,
-    live: null,
+    title: 'NestPH',
+    description:
+      'A two-sided rental marketplace for the Philippines connecting renters and landlords. Features real-time messaging, listing management, AI-powered search assistant, and an admin moderation dashboard.',
+    tags: ['React Vite', 'Supabase', 'Tailwind CSS', 'Express.js', 'Socket.io', 'Groq AI', 'Render', 'Vercel'],
+    github: '#',
+    live: '#',
     accent: '#00b4a6',
     gradient: 'linear-gradient(135deg, rgba(0,180,166,0.10) 0%, rgba(0,180,166,0.02) 100%)',
   },
@@ -46,14 +47,7 @@ function ProjectCard({ project }) {
   useEffect(() => {
     const el = cardRef.current;
     if (!el) return;
-    VanillaTilt.init(el, {
-      max: 10,
-      speed: 500,
-      glare: true,
-      'max-glare': 0.12,
-      perspective: 1200,
-      scale: 1.02,
-    });
+    VanillaTilt.init(el, { max: 10, speed: 500, glare: true, 'max-glare': 0.12, perspective: 1200, scale: 1.02 });
     return () => { if (el.vanillaTilt) el.vanillaTilt.destroy(); };
   }, []);
 
@@ -61,26 +55,13 @@ function ProjectCard({ project }) {
     <div
       ref={cardRef}
       className="project-card"
-      style={{
-        background: 'var(--bg-card)',
-        borderRadius: '16px',
-        padding: '2rem',
-        position: 'relative',
-        overflow: 'hidden',
-        transformStyle: 'preserve-3d',
-        boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.setProperty('border-color', `${project.accent}55`);
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.removeProperty('border-color');
-      }}
+      onMouseEnter={(e) => { e.currentTarget.style.setProperty('border-color', `${project.accent}55`); }}
+      onMouseLeave={(e) => { e.currentTarget.style.removeProperty('border-color'); }}
     >
-      {/* Background gradient */}
+      {/* Background gradient — dynamic per project */}
       <div style={{ position: 'absolute', inset: 0, background: project.gradient, pointerEvents: 'none', borderRadius: '16px' }} />
 
-      {/* Glow orb */}
+      {/* Glow orb — dynamic per project */}
       <div style={{
         position: 'absolute', top: '-40px', right: '-40px',
         width: '150px', height: '150px', borderRadius: '50%',
@@ -89,20 +70,13 @@ function ProjectCard({ project }) {
       }} />
 
       <div style={{ position: 'relative', zIndex: 1 }}>
-        <p style={{ fontFamily: '"Fira Code", monospace', fontSize: '0.75rem', color: project.accent, letterSpacing: '0.15em', marginBottom: '1rem', opacity: 0.75 }}>
-          {project.number}
-        </p>
-
-        <h3 style={{ fontFamily: '"Oswald", sans-serif', fontWeight: 600, fontSize: '1.5rem', color: 'var(--text-primary)', marginBottom: '0.9rem', lineHeight: 1.2 }}>
-          {project.title}
-        </h3>
-
-        <p style={{ fontFamily: '"Inter", sans-serif', fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.75, marginBottom: '1.5rem' }}>
-          {project.description}
-        </p>
+        {/* accent color is per-project, so it stays inline */}
+        <p className="project-number" style={{ color: project.accent }}>{project.number}</p>
+        <h3 className="project-title">{project.title}</h3>
+        <p className="project-desc">{project.description}</p>
 
         {project.tags.length > 0 && (
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.8rem' }}>
+          <div className="project-tags">
             {project.tags.map((tag) => (
               <span key={tag} className="tech-tag">{tag}</span>
             ))}
@@ -110,15 +84,15 @@ function ProjectCard({ project }) {
         )}
 
         {(project.github || project.live) && (
-          <div style={{ display: 'flex', gap: '1.2rem', alignItems: 'center' }}>
+          <div className="project-links">
             {project.github && (
               <a
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ display: 'flex', alignItems: 'center', gap: '6px', fontFamily: '"Fira Code", monospace', fontSize: '0.78rem', color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 0.2s' }}
-                onMouseEnter={(e) => e.currentTarget.style.color = project.accent}
-                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-muted)'}
+                className="project-link"
+                onMouseEnter={(e) => { e.currentTarget.style.color = project.accent; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = ''; }}
               >
                 <Github size={15} />
                 GitHub
@@ -129,9 +103,9 @@ function ProjectCard({ project }) {
                 href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ display: 'flex', alignItems: 'center', gap: '6px', fontFamily: '"Fira Code", monospace', fontSize: '0.78rem', color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 0.2s' }}
-                onMouseEnter={(e) => e.currentTarget.style.color = project.accent}
-                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-muted)'}
+                className="project-link"
+                onMouseEnter={(e) => { e.currentTarget.style.color = project.accent; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = ''; }}
               >
                 <ExternalLink size={15} />
                 Live Demo
@@ -168,27 +142,24 @@ export default function Projects() {
       style={{ padding: '110px 0', background: 'var(--bg-primary)', position: 'relative' }}
     >
       {/* Top wave */}
-      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, lineHeight: 0 }}>
-        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style={{ width: '100%', height: '60px', display: 'block' }}>
+      <div className="wave-top">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
           <path d="M0,30 C480,70 960,0 1440,30 L1440,0 L0,0 Z" fill="var(--bg-secondary)" />
         </svg>
       </div>
 
-      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 2rem' }}>
-        <div className="projects-header" style={{ textAlign: 'center', marginBottom: '4rem' }}>
+      <div className="section-container">
+        <div className="projects-header section-header">
           <p className="section-number" style={{ marginBottom: '0.5rem' }}>03. &nbsp;projects</p>
-          <h2 style={{ fontFamily: '"Oswald", sans-serif', fontWeight: 600, fontSize: 'clamp(2rem, 5vw, 2.8rem)', color: 'var(--text-primary)', marginBottom: '1rem' }}>
+          <h2 className="heading-section">
             Things I've <span className="gradient-text">Built</span>
           </h2>
-          <p style={{ fontFamily: '"Inter", sans-serif', color: 'var(--text-muted)', fontSize: '0.95rem', maxWidth: '480px', margin: '0 auto', lineHeight: 1.7 }}>
+          <p className="subtext">
             A selection of projects I'm proud of. Each one taught me something new.
           </p>
         </div>
 
-        <div
-          className="projects-grid"
-          style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.8rem' }}
-        >
+        <div className="projects-grid grid-projects">
           {projects.map((p) => (
             <ProjectCard key={p.number} project={p} />
           ))}

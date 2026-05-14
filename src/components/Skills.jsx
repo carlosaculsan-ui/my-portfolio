@@ -20,7 +20,7 @@ const skills = [
 function SkillCard({ skill }) {
   const { isDark } = useTheme();
 
-  // GitHub needs a theme-aware color so it's visible on both backgrounds
+  // GitHub needs theme-aware color to stay visible on both backgrounds
   const color  = skill.name === 'GitHub' ? (isDark ? '#b0b0cc' : '#2a2a4a') : skill.color;
   const bg     = skill.name === 'GitHub'
     ? (isDark ? 'rgba(176,176,204,0.06)' : 'rgba(42,42,74,0.06)')
@@ -43,21 +43,9 @@ function SkillCard({ skill }) {
       className="skill-card"
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
-      style={{
-        background: bg,
-        border: `1px solid ${border}`,
-        borderRadius: '14px',
-        padding: '1.6rem 1rem',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '0.75rem',
-        transition: 'box-shadow 0.3s ease',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
+      style={{ background: bg, border: `1px solid ${border}` }}
     >
-      {/* Glow orb */}
+      {/* Glow orb — color is dynamic per skill */}
       <div style={{
         position: 'absolute', top: '-20px', left: '50%', transform: 'translateX(-50%)',
         width: '80px', height: '80px', borderRadius: '50%',
@@ -66,18 +54,9 @@ function SkillCard({ skill }) {
       }} />
 
       <span style={{ fontSize: '2.2rem', lineHeight: 1 }}>{skill.icon}</span>
-      <span style={{
-        fontFamily: '"Fira Code", monospace',
-        fontSize: '0.78rem',
-        fontWeight: 500,
-        color: color,
-        letterSpacing: '0.05em',
-        textAlign: 'center',
-      }}>
-        {skill.name}
-      </span>
+      <span className="skill-name" style={{ color }}>{skill.name}</span>
 
-      {/* Bottom accent bar */}
+      {/* Bottom accent bar — color is dynamic per skill */}
       <div style={{
         position: 'absolute', bottom: 0, left: '20%', right: '20%',
         height: '2px', borderRadius: '2px',
@@ -111,37 +90,18 @@ export default function Skills() {
       ref={sectionRef}
       style={{ padding: '110px 0', background: 'var(--bg-primary)', position: 'relative' }}
     >
-      <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 2rem' }}>
-        {/* Header */}
-        <div className="skills-header" style={{ textAlign: 'center', marginBottom: '4rem' }}>
+      <div className="section-container" style={{ maxWidth: '1000px' }}>
+        <div className="skills-header section-header">
           <p className="section-number" style={{ marginBottom: '0.5rem' }}>02. &nbsp;skills</p>
-          <h2 style={{
-            fontFamily: '"Oswald", sans-serif',
-            fontWeight: 600,
-            fontSize: 'clamp(2rem, 5vw, 2.8rem)',
-            color: 'var(--text-primary)',
-            marginBottom: '1rem',
-            lineHeight: 1.1,
-          }}>
+          <h2 className="heading-section">
             Technologies I <span className="gradient-text">Work With</span>
           </h2>
-          <p style={{
-            fontFamily: '"Inter", sans-serif',
-            color: 'var(--text-muted)',
-            fontSize: '0.95rem',
-            maxWidth: '480px',
-            margin: '0 auto',
-            lineHeight: 1.7,
-          }}>
+          <p className="subtext">
             A curated set of tools and technologies I use to build modern web experiences.
           </p>
         </div>
 
-        {/* Grid */}
-        <div
-          className="skills-grid"
-          style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '1.2rem' }}
-        >
+        <div className="skills-grid grid-skills">
           {skills.map((skill) => (
             <SkillCard key={skill.name} skill={skill} />
           ))}

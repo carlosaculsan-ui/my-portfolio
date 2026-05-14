@@ -42,17 +42,8 @@ function MagneticLink({ label }) {
       href={`#${label.toLowerCase()}`}
       onClick={scroll}
       className="nav-link magnetic"
-      style={{
-        fontFamily: '"Fira Code", monospace',
-        fontSize: '0.8rem',
-        letterSpacing: '0.12em',
-        textTransform: 'uppercase',
-        textDecoration: 'none',
-        color: 'var(--text-primary)',
-        transition: 'color 0.2s ease',
-      }}
-      onMouseEnter={(e) => { e.currentTarget.style.color = '#6C63FF'; }}
-      onMouseLeave={(e)  => { e.currentTarget.style.color = 'var(--text-primary)'; }}
+      onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--accent)'; }}
+      onMouseLeave={(e) => { e.currentTarget.style.color = ''; }}
     >
       {label}
     </a>
@@ -93,7 +84,7 @@ function ThemeToggle() {
           : 'inset 0 0 0 1.5px rgba(0,0,0,0.1)';
       }}
     >
-      {/* Sliding knob */}
+      {/* Sliding knob — left position and colors are JS-driven (prevents FOUC) */}
       <span
         style={{
           position: 'absolute',
@@ -103,9 +94,7 @@ function ThemeToggle() {
           height: '22px',
           borderRadius: '50%',
           backgroundColor: isDark ? '#6C63FF' : '#ffffff',
-          boxShadow: isDark
-            ? '0 2px 8px rgba(108,99,255,0.5)'
-            : '0 2px 6px rgba(0,0,0,0.18)',
+          boxShadow: isDark ? '0 2px 8px rgba(108,99,255,0.5)' : '0 2px 6px rgba(0,0,0,0.18)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -114,10 +103,7 @@ function ThemeToggle() {
           pointerEvents: 'none',
         }}
       >
-        {isDark
-          ? <Moon size={11} strokeWidth={2.5} />
-          : <Sun size={12} strokeWidth={2.5} />
-        }
+        {isDark ? <Moon size={11} strokeWidth={2.5} /> : <Sun size={12} strokeWidth={2.5} />}
       </span>
     </button>
   );
@@ -130,20 +116,11 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    // Use a GSAP context so StrictMode double-invocation is handled cleanly.
-    // Animate only `y` (slide in from above) — never animate opacity, which
-    // would leave the navbar invisible if the tween is interrupted.
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        navRef.current,
-        { y: -80 },
-        { y: 0, duration: 0.8, ease: 'power3.out', delay: 0.2 }
-      );
+      gsap.fromTo(navRef.current, { y: -80 }, { y: 0, duration: 0.8, ease: 'power3.out', delay: 0.2 });
     });
-
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', onScroll);
-
     return () => {
       ctx.revert();
       window.removeEventListener('scroll', onScroll);
@@ -155,117 +132,56 @@ export default function Navbar() {
     setOpen(false);
   };
 
-  // Inline styles for background — never rely on Tailwind dark: for mission-critical
-  // visibility. isDark is read synchronously from context which reads the DOM class
-  // set by the inline script in index.html before React even loads.
-  const bgColor  = isDark ? '#0d0d1a' : '#f4f4ff';
-  const border   = isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,0,0.08)';
-  const shadow   = scrolled
-    ? isDark
-      ? '0 4px 24px rgba(0,0,0,0.5)'
-      : '0 4px 24px rgba(108,99,255,0.10)'
+  // Background/border/shadow are JS-driven to prevent flash of unstyled content —
+  // isDark is read synchronously from the DOM class set by the inline script in index.html.
+  const bgColor = isDark ? '#0d0d1a' : '#f4f4ff';
+  const border  = isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,0,0.08)';
+  const shadow  = scrolled
+    ? isDark ? '0 4px 24px rgba(0,0,0,0.5)' : '0 4px 24px rgba(108,99,255,0.10)'
     : 'none';
 
   return (
     <nav
       ref={navRef}
       style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 1000,
-        height: '64px',
-        display: 'flex',
-        alignItems: 'center',
-        backgroundColor: bgColor,
-        borderBottom: border,
-        boxShadow: shadow,
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
+        height: '64px', display: 'flex', alignItems: 'center',
+        backgroundColor: bgColor, borderBottom: border, boxShadow: shadow,
+        backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
         transition: 'background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease',
       }}
     >
       {/* Inner container */}
-      <div
-        style={{
-          width: '100%',
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: '0 2rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          height: '100%',
-        }}
-      >
+      <div className="flex items-center justify-between w-full h-full px-8 mx-auto max-w-[1200px]">
+
         {/* Logo */}
         <a
           href="#hero"
           onClick={(e) => { e.preventDefault(); scrollTo('hero'); }}
-          style={{ textDecoration: 'none', flexShrink: 0, display: 'flex', alignItems: 'center' }}
+          className="flex items-center flex-shrink-0 no-underline"
           aria-label="Home"
         >
-          {/* Two overlapping rotated squares — matching the brand mark */}
-          <svg
-            width="38"
-            height="42"
-            viewBox="-4 -2 66 72"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            {/* Blue-steel square — upper-left */}
-            <rect
-              x="1"
-              y="1"
-              width="36"
-              height="36"
-              stroke="#5b7ea8"
-              strokeWidth="2.6"
-              fill="none"
-              transform="rotate(13 19 19)"
-            />
-            {/* Copper square — lower-right */}
-            <rect
-              x="21"
-              y="31"
-              width="36"
-              height="36"
-              stroke="#c07858"
-              strokeWidth="2.6"
-              fill="none"
-              transform="rotate(13 39 49)"
-            />
+          <svg width="38" height="42" viewBox="-4 -2 66 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1"  y="1"  width="36" height="36" stroke="#5b7ea8" strokeWidth="2.6" fill="none" transform="rotate(13 19 19)" />
+            <rect x="21" y="31" width="36" height="36" stroke="#c07858" strokeWidth="2.6" fill="none" transform="rotate(13 39 49)" />
           </svg>
         </a>
 
         {/* Desktop links + controls */}
-        <div className="hidden md:flex" style={{ gap: '2.5rem', alignItems: 'center' }}>
+        <div className="hidden md:flex items-center gap-10">
           {links.map((l) => <MagneticLink key={l} label={l} />)}
           <a
             href="#contact"
             onClick={(e) => { e.preventDefault(); scrollTo('contact'); }}
-            style={{
-              fontFamily: '"Fira Code", monospace',
-              fontSize: '0.78rem',
-              padding: '7px 20px',
-              borderRadius: '6px',
-              border: '1.5px solid #6C63FF',
-              color: '#6C63FF',
-              textDecoration: 'none',
-              letterSpacing: '0.08em',
-              transition: 'background 0.25s, color 0.25s',
-              flexShrink: 0,
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = '#6C63FF'; e.currentTarget.style.color = '#fff'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#6C63FF'; }}
+            className="btn-hire"
           >
             Hire Me
           </a>
+          <ThemeToggle />
         </div>
 
         {/* Mobile: toggle + hamburger */}
-        <div className="md:hidden" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        <div className="md:hidden flex items-center gap-3">
           <ThemeToggle />
           <button
             onClick={() => setOpen((v) => !v)}
@@ -276,17 +192,13 @@ export default function Navbar() {
               <span
                 key={i}
                 style={{
-                  display: 'block',
-                  width: '22px',
-                  height: '2px',
-                  borderRadius: '2px',
+                  display: 'block', width: '22px', height: '2px', borderRadius: '2px',
                   backgroundColor: isDark ? '#e8e8e8' : '#1a1a2e',
                   transition: 'transform 0.3s, opacity 0.3s',
                   transform:
                     open && i === 0 ? 'translateY(7px) rotate(45deg)'
                     : open && i === 2 ? 'translateY(-7px) rotate(-45deg)'
-                    : open && i === 1 ? 'scaleX(0)'
-                    : 'none',
+                    : open && i === 1 ? 'scaleX(0)' : 'none',
                   opacity: open && i === 1 ? 0 : 1,
                 }}
               />
@@ -295,40 +207,26 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile dropdown menu */}
+      {/* Mobile dropdown */}
       <div
         style={{
-          position: 'absolute',
-          top: '64px',
-          left: 0,
-          right: 0,
+          position: 'absolute', top: '64px', left: 0, right: 0,
           backgroundColor: isDark ? '#0d0d1a' : '#f4f4ff',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
+          backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
           overflow: 'hidden',
           maxHeight: open ? '300px' : '0',
           transition: 'max-height 0.4s ease',
-          borderBottom: open ? (isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,0,0.08)') : 'none',
+          borderBottom: open ? border : 'none',
           zIndex: 999,
         }}
       >
-        <div style={{ padding: '1.5rem 2rem', display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+        <div className="flex flex-col gap-5 px-8 py-6">
           {links.map((l) => (
             <a
               key={l}
               href={`#${l.toLowerCase()}`}
               onClick={(e) => { e.preventDefault(); scrollTo(l.toLowerCase()); }}
-              style={{
-                fontFamily: '"Fira Code", monospace',
-                fontSize: '0.9rem',
-                color: 'var(--text-primary)',
-                textDecoration: 'none',
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase',
-                transition: 'color 0.2s',
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = '#6C63FF'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; }}
+              className="mobile-nav-link"
             >
               {l}
             </a>
