@@ -105,7 +105,7 @@ export default function Contact() {
               Download Resume
             </a>
 
-            <div className="contact-socials-row" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <div className="contact-socials-row" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '1rem' }}>
               {socials.map((s) => {
                 const Icon = s.icon;
                 return (
