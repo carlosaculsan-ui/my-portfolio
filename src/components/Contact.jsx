@@ -25,11 +25,7 @@ export default function Contact() {
   }, []);
 
   return (
-    <section
-      id="contact"
-      ref={sectionRef}
-      style={{ padding: '120px 0 100px', background: 'var(--bg-secondary)', position: 'relative', overflow: 'hidden' }}
-    >
+    <section id="contact" ref={sectionRef} className="section-secondary">
       {/* Top wave */}
       <div className="wave-top">
         <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
@@ -93,7 +89,7 @@ export default function Contact() {
         <div className="contact-divider" />
 
         {/* Social links */}
-        <div className="contact-socials flex justify-center gap-6 flex-wrap">
+        <div className="contact-socials contact-socials-row flex justify-center gap-6 flex-wrap">
           {socials.map((s) => {
             const Icon = s.icon;
             return (

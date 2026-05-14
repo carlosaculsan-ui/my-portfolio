@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import passportPic from '../assets/Passport pic.jpg';
@@ -22,7 +22,8 @@ const cornerAccents = [
 ];
 
 export default function About() {
-  const sectionRef = useRef(null);
+  const sectionRef  = useRef(null);
+  const [imgFailed, setImgFailed] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -37,11 +38,7 @@ export default function About() {
   }, []);
 
   return (
-    <section
-      id="about"
-      ref={sectionRef}
-      style={{ padding: '120px 0', background: 'var(--bg-secondary)', position: 'relative', overflow: 'hidden' }}
-    >
+    <section id="about" ref={sectionRef} className="section-secondary">
       {/* Top wave */}
       <div className="wave-top">
         <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
@@ -91,7 +88,24 @@ export default function About() {
 
               {/* Avatar */}
               <div className="about-avatar">
-                <img src={passportPic} alt="Carlo Saculsan" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                {imgFailed ? (
+                  <div style={{
+                    width: '100%', height: '100%',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    background: 'linear-gradient(135deg, var(--accent), var(--teal))',
+                    fontFamily: '"Oswald", sans-serif', fontWeight: 700,
+                    fontSize: '1.8rem', color: '#fff', letterSpacing: '0.05em',
+                  }}>
+                    CS
+                  </div>
+                ) : (
+                  <img
+                    src={passportPic}
+                    alt="Carlo Saculsan"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    onError={() => setImgFailed(true)}
+                  />
+                )}
               </div>
 
               <div className="text-center">

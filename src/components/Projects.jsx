@@ -136,11 +136,7 @@ export default function Projects() {
   }, []);
 
   return (
-    <section
-      id="projects"
-      ref={sectionRef}
-      style={{ padding: '110px 0', background: 'var(--bg-primary)', position: 'relative' }}
-    >
+    <section id="projects" ref={sectionRef} className="section-primary">
       {/* Top wave */}
       <div className="wave-top">
         <svg viewBox="0 0 1440 60" preserveAspectRatio="none">

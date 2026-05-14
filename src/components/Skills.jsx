@@ -85,11 +85,7 @@ export default function Skills() {
   }, []);
 
   return (
-    <section
-      id="skills"
-      ref={sectionRef}
-      style={{ padding: '110px 0', background: 'var(--bg-primary)', position: 'relative' }}
-    >
+    <section id="skills" ref={sectionRef} className="section-primary">
       <div className="section-container" style={{ maxWidth: '1000px' }}>
         <div className="skills-header section-header">
           <p className="section-number" style={{ marginBottom: '0.5rem' }}>02. &nbsp;skills</p>

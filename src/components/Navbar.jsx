@@ -152,7 +152,7 @@ export default function Navbar() {
       }}
     >
       {/* Inner container */}
-      <div className="flex items-center justify-between w-full h-full px-8 mx-auto max-w-[1200px]">
+      <div className="flex items-center justify-between w-full h-full px-5 md:px-8 mx-auto max-w-[1200px]">
 
         {/* Logo */}
         <a

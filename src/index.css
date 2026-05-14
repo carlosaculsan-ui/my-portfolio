@@ -369,6 +369,19 @@ body {
    ══════════════════════════════════════════════════════ */
 
 /* ── Section layout ──────────────────────────────────── */
+.section-primary {
+  padding: 110px 0;
+  background: var(--bg-primary);
+  position: relative;
+}
+
+.section-secondary {
+  padding: 120px 0;
+  background: var(--bg-secondary);
+  position: relative;
+  overflow: hidden;
+}
+
 .section-container {
   max-width: 1100px;
   margin: 0 auto;
@@ -679,20 +692,20 @@ body {
 /* ── Responsive grid layouts ─────────────────────────── */
 .grid-about {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: 4rem;
   align-items: center;
 }
 
 .grid-projects {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
   gap: 1.8rem;
 }
 
 .grid-skills {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(140px, 100%), 1fr));
   gap: 1.2rem;
 }
 
@@ -739,4 +752,87 @@ body {
   font-size: 0.78rem;
   color: var(--text-muted);
   opacity: 0.6;
+}
+
+/* ══════════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════════ */
+
+/* ── Touch devices — disable custom cursor ───────────── */
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    cursor: auto !important;
+  }
+}
+
+/* ── Tablet (≤ 900px) ────────────────────────────────── */
+@media (max-width: 900px) {
+  .section-primary   { padding: 85px 0; }
+  .section-secondary { padding: 95px 0; }
+
+  .grid-about { gap: 2.5rem; }
+}
+
+/* ── Mobile (≤ 640px) ────────────────────────────────── */
+@media (max-width: 640px) {
+  /* Tighter horizontal padding on small screens */
+  .section-container { padding: 0 1.25rem; }
+
+  /* Reduce vertical breathing room */
+  .section-primary   { padding: 65px 0; }
+  .section-secondary { padding: 70px 0; }
+
+  /* Section header */
+  .section-header  { margin-bottom: 2rem; }
+  .heading-section { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+  .heading-contact { font-size: clamp(1.6rem, 7vw, 2.8rem); }
+
+  /* Hero */
+  .hero-section  { padding-top: 5.5rem; }
+  /* Hide scroll indicator — takes space and has no effect on touch */
+  .hero-scroll   { display: none; }
+
+  /* Wave separators — shorter on mobile */
+  .wave-top svg,
+  .wave-bottom svg { height: 40px; }
+
+  /* About grid gap */
+  .grid-about { gap: 2rem; }
+
+  /* Projects — force single column so cards never clip */
+  .grid-projects { grid-template-columns: 1fr; }
+
+  /* Skills — 3 fixed columns, compact cards */
+  .grid-skills {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+  .skill-card { padding: 1.2rem 0.5rem; }
+  .skill-name { font-size: 0.7rem; letter-spacing: 0; }
+
+  /* Buttons */
+  .btn-primary   { padding: 12px 24px; font-size: 0.82rem; }
+  .btn-secondary { padding: 11px 24px; font-size: 0.82rem; }
+
+  /* Contact social links — stack vertically, centered */
+  .contact-socials-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .contact-social {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+
+  /* Contact body margin */
+  .contact-body-text { margin-bottom: 2rem; }
 }
