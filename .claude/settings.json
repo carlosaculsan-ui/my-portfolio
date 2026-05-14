@@ -5,7 +5,14 @@
       "Bash(Select-Object Name, FullName)",
       "Bash(npm run *)",
       "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\Admin\\\\OneDrive\\\\Desktop\\\\my-portfolio\\\\src\" -Recurse -File)",
-      "Bash(Select-Object FullName)"
+      "Bash(Select-Object FullName)",
+      "Bash(Get-ChildItem -Recurse -Depth 3)",
+      "Bash(Select-Object FullName, PSIsContainer)",
+      "Bash(Format-Table -AutoSize)",
+      "Bash(Remove-Item \"c:\\\\Users\\\\Admin\\\\OneDrive\\\\Desktop\\\\my-portfolio\\\\src\\\\App.css\")"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\Admin\\OneDrive\\Desktop\\my-portfolio\\src"
     ]
   }
 }

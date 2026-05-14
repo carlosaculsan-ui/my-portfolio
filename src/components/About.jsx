@@ -8,9 +8,9 @@ gsap.registerPlugin(ScrollTrigger);
 const bullets = [
   { emoji: '🚀', text: 'Currently seeking OJT opportunities where I can contribute, grow, and learn from real-world projects.' },
   { emoji: '🤝', text: 'Strong team player — I communicate well, adapt quickly, and work great in collaborative environments.' },
-  { emoji: '🧠', text: 'Vibe coder at heart — I leverage AI tools and prompting to build smarter and ship faster.' },
+  { emoji: '🧠', text: 'I integrate AI tooling into my workflow to move faster and solve problems more effectively.' },
   { emoji: '🎨', text: 'Design-driven developer — I care as much about how things look as how they work.' },
-  { emoji: '🎮', text: "When I'm not coding, I'm gaming or tinkering with side projects." },
+  { emoji: '🎮', text: "Outside of coding, I'm an avid gamer with a strong interest in history, geography, and science." },
 ];
 
 // Corner accent positions — only the directional border values change per corner

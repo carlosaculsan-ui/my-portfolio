@@ -29,16 +29,6 @@ const projects = [
     accent: '#00b4a6',
     gradient: 'linear-gradient(135deg, rgba(0,180,166,0.10) 0%, rgba(0,180,166,0.02) 100%)',
   },
-  {
-    number: '03',
-    title: 'Coming Soon',
-    description: 'Something new is in the works. Stay tuned.',
-    tags: [],
-    github: null,
-    live: null,
-    accent: '#e05580',
-    gradient: 'linear-gradient(135deg, rgba(224,85,128,0.10) 0%, rgba(224,85,128,0.02) 100%)',
-  },
 ];
 
 function ProjectCard({ project }) {

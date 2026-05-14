@@ -1,13 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Github, Linkedin, Mail, ArrowRight, Download } from 'lucide-react';
+import { Github, Linkedin, Download, Send } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const socials = [
   { label: 'GitHub',   href: 'https://github.com/carlosaculsan-ui',                  icon: Github,   hover: '#6C63FF' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/carlo-saculsan-63664240a/', icon: Linkedin, hover: '#0077B5' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/carlo-saculsan-63664240a/', icon: Linkedin, hover: '#6C63FF' },
 ];
 
 const btnHover = (e) => {
@@ -23,15 +23,40 @@ const btnLeave = (e) => {
 
 export default function Contact() {
   const sectionRef = useRef(null);
+  const [form, setForm]     = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState('idle'); // idle | sending | success | error
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.contact-header', { scrollTrigger: { trigger: '.contact-header', start: 'top 85%' }, y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' });
-      gsap.from('.contact-body',   { scrollTrigger: { trigger: '.contact-body',   start: 'top 82%' }, y: 30, opacity: 0, duration: 0.8, ease: 'power3.out' });
-      gsap.from('.contact-social', { scrollTrigger: { trigger: '.contact-socials',start: 'top 82%' }, x: -30, opacity: 0, duration: 0.6, stagger: 0.12, ease: 'power3.out' });
+      gsap.from('.contact-info',   { scrollTrigger: { trigger: '.contact-grid',   start: 'top 82%' }, x: -40, opacity: 0, duration: 0.8, ease: 'power3.out' });
+      gsap.from('.contact-form',   { scrollTrigger: { trigger: '.contact-grid',   start: 'top 82%' }, x:  40, opacity: 0, duration: 0.8, ease: 'power3.out' });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
+
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('sending');
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ access_key: import.meta.env.VITE_WEB3FORMS_KEY, ...form }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus('success');
+        setForm({ name: '', email: '', message: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
+  };
 
   return (
     <section id="contact" ref={sectionRef} className="section-secondary">
@@ -48,87 +73,128 @@ export default function Contact() {
         <div style={{ position: 'absolute', width: '400px', height: '400px', borderRadius: '50%', top: '-100px',   right: '-100px', background: 'radial-gradient(circle, rgba(108,99,255,0.04) 0%, transparent 70%)' }} />
       </div>
 
-      <div className="section-container text-center relative z-[1]" style={{ maxWidth: '760px' }}>
+      <div className="section-container relative z-[1]" style={{ maxWidth: '1000px' }}>
 
         {/* Header */}
-        <div className="contact-header">
+        <div className="contact-header text-center" style={{ marginBottom: '3rem' }}>
           <h2 className="heading-contact">
             Get In <span className="gradient-text">Touch</span>
           </h2>
-          <div className="gradient-divider" style={{ margin: '0 auto 2rem' }} />
+          <div className="gradient-divider" style={{ margin: '0 auto' }} />
         </div>
 
-        {/* Body */}
-        <div className="contact-body">
-          <p className="contact-body-text">
-            I'm currently open to new opportunities — whether it's an OJT internship,
-            full-time role, freelance project, or just a chat about web development.
-            My inbox is always open. Let's build something great together.
-          </p>
+        {/* Two-column layout */}
+        <div className="contact-grid">
 
-          {/* CTAs — both outlined, equal visual weight */}
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '3.5rem' }}>
-            <a
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=carlosaculsan@gmail.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-secondary"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', textDecoration: 'none', letterSpacing: '0.08em' }}
-              onMouseEnter={btnHover}
-              onMouseLeave={btnLeave}
-            >
-              <Mail size={16} />
-              Say Hello
-              <ArrowRight size={16} />
-            </a>
+          {/* Left: copy + socials */}
+          <div className="contact-info">
+            <p className="contact-body-text">
+              I'm currently open to new opportunities — whether it's an OJT internship,
+              full-time role, freelance project, or just a chat about web development.
+              Let's build something great together.
+            </p>
+
             <a
               href="/Carlo_Saculsan_Resume.pdf"
               download
-              className="btn-secondary"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', textDecoration: 'none', letterSpacing: '0.08em' }}
+              className="btn-secondary contact-resume-btn"
               onMouseEnter={btnHover}
               onMouseLeave={btnLeave}
             >
               <Download size={16} />
               Download Resume
             </a>
+
+            <div className="contact-socials-row" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {socials.map((s) => {
+                const Icon = s.icon;
+                return (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-secondary contact-social"
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background  = `${s.hover}15`;
+                      e.currentTarget.style.borderColor = `${s.hover}88`;
+                      e.currentTarget.style.color       = s.hover;
+                      e.currentTarget.style.boxShadow   = `0 0 30px ${s.hover}33`;
+                      e.currentTarget.style.transform   = 'translateY(-2px)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background  = 'transparent';
+                      e.currentTarget.style.borderColor = '';
+                      e.currentTarget.style.color       = '';
+                      e.currentTarget.style.boxShadow   = 'none';
+                      e.currentTarget.style.transform   = '';
+                    }}
+                  >
+                    <Icon size={15} />
+                    {s.label}
+                  </a>
+                );
+              })}
+            </div>
           </div>
-        </div>
 
-        {/* Social links — same weight as CTAs */}
-        <div className="contact-socials contact-socials-row flex justify-center gap-4 flex-wrap">
-          {socials.map((s) => {
-            const Icon = s.icon;
-            return (
-              <a
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-secondary"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', textDecoration: 'none', letterSpacing: '0.08em' }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background  = `${s.hover}15`;
-                  e.currentTarget.style.borderColor = `${s.hover}88`;
-                  e.currentTarget.style.color       = s.hover;
-                  e.currentTarget.style.boxShadow   = `0 0 30px ${s.hover}33`;
-                  e.currentTarget.style.transform   = 'translateY(-2px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background  = 'transparent';
-                  e.currentTarget.style.borderColor = '';
-                  e.currentTarget.style.color       = '';
-                  e.currentTarget.style.boxShadow   = 'none';
-                  e.currentTarget.style.transform   = '';
-                }}
-              >
-                <Icon size={15} />
-                {s.label}
-              </a>
-            );
-          })}
-        </div>
+          {/* Right: form */}
+          <form className="contact-form" onSubmit={handleSubmit} noValidate>
+            <div className="form-field">
+              <label className="form-label" htmlFor="cf-name">Name</label>
+              <input
+                id="cf-name"
+                className="form-input"
+                type="text"
+                name="name"
+                required
+                placeholder="Your name"
+                value={form.name}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="form-field">
+              <label className="form-label" htmlFor="cf-email">Email</label>
+              <input
+                id="cf-email"
+                className="form-input"
+                type="email"
+                name="email"
+                required
+                placeholder="your@email.com"
+                value={form.email}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="form-field">
+              <label className="form-label" htmlFor="cf-message">Message</label>
+              <textarea
+                id="cf-message"
+                className="form-input form-textarea"
+                name="message"
+                required
+                placeholder="What's on your mind?"
+                value={form.message}
+                onChange={handleChange}
+              />
+            </div>
 
+            <button type="submit" className="btn-primary form-submit" disabled={status === 'sending'}>
+              {status === 'sending'
+                ? 'Sending...'
+                : <><Send size={15} strokeWidth={2} /> Send Message</>
+              }
+            </button>
+
+            {status === 'success' && (
+              <p className="form-feedback form-success">Message sent! I'll get back to you soon.</p>
+            )}
+            {status === 'error' && (
+              <p className="form-feedback form-error">Something went wrong. Try emailing me directly.</p>
+            )}
+          </form>
+
+        </div>
       </div>
     </section>
   );
