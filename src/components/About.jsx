@@ -107,6 +107,12 @@ export default function About() {
                 <p className="about-role">Quezon City, Philippines 🇵🇭</p>
               </div>
 
+              {/* Contact details */}
+              <div className="about-contact-details">
+                <p className="about-contact-item">📞 09500435479</p>
+                <p className="about-contact-item">✉️ carlosaculsan@gmail.com</p>
+              </div>
+
               {/* Status badge */}
               <div className="about-status">
                 <span className="about-status-dot" />
