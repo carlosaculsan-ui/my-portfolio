@@ -29,6 +29,17 @@ const projects = [
     accent: '#00b4a6',
     gradient: 'linear-gradient(135deg, rgba(0,180,166,0.10) 0%, rgba(0,180,166,0.02) 100%)',
   },
+  {
+    number: '03',
+    title: 'Alterline',
+    description:
+      'A personal worldbuilding and creative writing platform for fiction writers. Features a rich text editor, Wikipedia-style encyclopedia (Carlopedia), force-directed relationship graph, AI writing assistant, and real-time @mention linking between entries.',
+    tags: ['React Vite', 'Supabase', 'Tailwind CSS', 'Tiptap', 'Vercel'],
+    github: '#',
+    live: 'https://alterline.vercel.app/',
+    accent: '#e05580',
+    gradient: 'linear-gradient(135deg, rgba(224,85,128,0.10) 0%, rgba(224,85,128,0.02) 100%)',
+  },
 ];
 
 function ProjectCard({ project }) {
