@@ -20,12 +20,12 @@ const projects = [
   },
   {
     number: '02',
-    title: 'NestPH',
+    title: 'LabadaGo',
     description:
-      'A two-sided rental marketplace for the Philippines connecting renters and landlords. Features real-time messaging, listing management, AI-powered search assistant, and an admin moderation dashboard.',
-    tags: ['React Vite', 'Supabase', 'Tailwind CSS', 'Express.js', 'Socket.io', 'Groq AI', 'Render', 'Vercel'],
+      'A laundry pickup and delivery booking platform for the Philippines. Features shop browsing with live filters, multi-role dashboards for merchants and riders, real-time order status tracking, and an admin panel with analytics.',
+    tags: ['React Vite', 'Firebase', 'Tailwind CSS', 'React Router', 'Vercel'],
     github: '#',
-    live: 'https://nestph.vercel.app/',
+    live: 'https://labada-go.vercel.app/',
     accent: '#00b4a6',
     gradient: 'linear-gradient(135deg, rgba(0,180,166,0.10) 0%, rgba(0,180,166,0.02) 100%)',
   },
