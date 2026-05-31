@@ -31,6 +31,17 @@ const projects = [
   },
   {
     number: '03',
+    title: 'Karlo Map',
+    description:
+      'An interactive Philippine history explorer spanning 900 AD to 2026. Features a year-based timeline with animated map markers, era mode for pre-colonial periods with live trade route visualizations, and atmospheric particle effects tied to historical events like wars, typhoons, and volcanic eruptions.',
+    tags: ['React Vite', 'Firebase', 'Tailwind CSS', 'MapLibre GL', 'React Router', 'Vercel'],
+    github: '#',
+    live: 'https://karlo-map-sqf6.vercel.app/',
+    accent: '#f5a623',
+    gradient: 'linear-gradient(135deg, rgba(245,166,35,0.10) 0%, rgba(245,166,35,0.02) 100%)',
+  },
+  {
+    number: '04',
     title: 'Alterline',
     description:
       'A personal worldbuilding and creative writing platform for fiction writers. Features a rich text editor, Wikipedia-style encyclopedia (Carlopedia), force-directed relationship graph, AI writing assistant, and real-time @mention linking between entries.',
