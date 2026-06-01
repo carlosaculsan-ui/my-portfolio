@@ -934,18 +934,25 @@ body {
 
   /* Hero */
   .hero-section  { padding-top: 5.5rem; }
-  /* Hide scroll indicator — takes space and has no effect on touch */
   .hero-scroll   { display: none; }
 
   /* Wave separators — shorter on mobile */
   .wave-top svg,
   .wave-bottom svg { height: 40px; }
 
-  /* About grid gap */
-  .grid-about { gap: 2rem; }
+  /* About grid — single column, tighter gap */
+  .grid-about { grid-template-columns: 1fr; gap: 2rem; }
+
+  /* About card — reduce padding and avatar on mobile */
+  .about-card   { padding: 1.75rem 1.25rem; width: min(320px, 100%); }
+  .about-avatar { width: 120px; height: 120px; }
+  .about-contact-details { padding: 0.6rem 0.75rem; }
+  .about-contact-item   { font-size: 0.68rem; }
 
   /* Projects — force single column so cards never clip */
-  .grid-projects { grid-template-columns: 1fr; }
+  .grid-projects  { grid-template-columns: 1fr; }
+  .project-card   { padding: 1.5rem; }
+  .project-title  { font-size: 1.25rem; }
 
   /* Skills — 3 fixed columns, compact cards */
   .grid-skills {
@@ -962,21 +969,33 @@ body {
   /* Contact — stack grid, center everything */
   .contact-grid {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 2rem;
   }
-  .contact-info { text-align: center; }
-  .contact-resume-btn { margin-inline: auto; }
-  .contact-socials-row {
-    flex-direction: row;
-    justify-content: center;
-    gap: 0.75rem;
-  }
-  .contact-social {
-    width: 100%;
-    max-width: 300px;
-    justify-content: center;
+  .contact-info        { text-align: center; }
+  .contact-resume-btn  { margin-inline: auto; display: flex; justify-content: center; }
+  .contact-socials-row { justify-content: center; }
+  .contact-social      { justify-content: center; }
+  .contact-body-text   { margin-bottom: 1.5rem; }
+
+  /* Hide oversized background orbs on mobile — they cause overflow */
+  .orbs-layer { display: none; }
+}
+
+/* ── Narrow phones (≤ 480px) ─────────────────────────── */
+@media (max-width: 480px) {
+  .section-container { padding: 0 1rem; }
+
+  /* Skills — drop to 2 columns on very small screens */
+  .grid-skills {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
   }
 
-  /* Contact body margin */
-  .contact-body-text { margin-bottom: 2rem; }
+  /* Contact social buttons — stack vertically */
+  .contact-socials-row { flex-direction: column; align-items: center; }
+  .contact-social      { width: 100%; max-width: 280px; }
+  .contact-resume-btn  { width: 100%; max-width: 280px; }
+
+  /* Tighten form inputs */
+  .form-input { padding: 0.65rem 0.75rem; font-size: 0.9rem; }
 }
