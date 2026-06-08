@@ -58,7 +58,7 @@ function ProjectCard({ project }) {
 
   useEffect(() => {
     const el = cardRef.current;
-    if (!el) return;
+    if (!el || window.matchMedia('(pointer: coarse)').matches) return;
     VanillaTilt.init(el, { max: 10, speed: 500, glare: true, 'max-glare': 0.12, perspective: 1200, scale: 1.02 });
     return () => { if (el.vanillaTilt) el.vanillaTilt.destroy(); };
   }, []);
@@ -86,7 +86,7 @@ function ProjectCard({ project }) {
 
       <div style={{ position: 'relative', zIndex: 1 }}>
         {/* Browser-chrome preview — replace with <img> once screenshots are ready */}
-        <div style={{
+        <div className="project-preview-mock" style={{
           margin: '-2rem -2rem 1.5rem',
           height: '165px',
           background: `linear-gradient(160deg, ${project.accent}20 0%, ${project.accent}06 100%)`,
