@@ -29,10 +29,9 @@ const familiarSkills = [
 function SkillCard({ skill }) {
   const { isDark } = useTheme();
 
-  // null color = neutral skill (GitHub, Vercel, Socket.io) — theme-aware to stay visible on both backgrounds
   const isNeutral = skill.color === null;
   const color  = isNeutral ? (isDark ? '#b0b0cc' : '#2a2a4a') : skill.color;
-  const bg     = isNeutral ? (isDark ? 'rgba(176,176,204,0.06)' : 'rgba(42,42,74,0.06)') : (isDark ? skill.bg : 'var(--bg-card)');
+  const bg     = 'var(--bg-card)';
   const border = isNeutral ? (isDark ? 'rgba(176,176,204,0.18)' : 'rgba(42,42,74,0.18)') : skill.border;
 
   const onEnter = (e) => {
