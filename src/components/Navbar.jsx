@@ -163,7 +163,7 @@ export default function Navbar() {
       }}
     >
       {/* Inner container — 3-col: logo | links (true center) | controls */}
-      <div className="flex items-center w-full h-full pl-0 pr-5 md:pl-1 md:pr-8 mx-auto max-w-[1200px]">
+      <div className="nav-inner">
 
         {/* Left: Logo */}
         <div className="flex-1">
@@ -178,7 +178,7 @@ export default function Navbar() {
         </div>
 
         {/* Center: Desktop nav links */}
-        <div className="hidden md:flex items-center gap-14">
+        <div className="nav-desktop-links">
           {links.map((l) => <MagneticLink key={l} label={l} isActive={activeSection === l.toLowerCase()} />)}
         </div>
 
@@ -187,14 +187,14 @@ export default function Navbar() {
           <a
             href="#contact"
             onClick={(e) => { e.preventDefault(); scrollTo('contact'); }}
-            className="btn-hire hidden md:block"
+            className="btn-hire nav-desktop-only"
           >
             Hire Me
           </a>
           <ThemeToggle />
           {/* Mobile-only hamburger */}
           <button
-            className="md:hidden"
+            className="nav-mobile-only"
             onClick={() => setOpen((v) => !v)}
             style={{ background: 'none', border: 'none', padding: '8px' }}
             aria-label="Toggle menu"
