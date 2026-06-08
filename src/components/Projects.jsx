@@ -144,9 +144,11 @@ export default function Projects() {
         scrollTrigger: { trigger: '.projects-header', start: 'top 85%' },
         y: 40, opacity: 0, duration: 0.8, ease: 'power3.out',
       });
-      gsap.from('.project-card', {
-        scrollTrigger: { trigger: '.projects-grid', start: 'top 78%' },
-        y: 60, opacity: 0, duration: 0.75, stagger: 0.15, ease: 'power3.out',
+      gsap.utils.toArray('.project-card').forEach((card) => {
+        gsap.from(card, {
+          scrollTrigger: { trigger: card, start: 'top 88%' },
+          y: 60, opacity: 0, duration: 0.75, ease: 'power3.out',
+        });
       });
     }, sectionRef);
     return () => ctx.revert();
