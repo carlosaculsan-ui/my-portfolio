@@ -93,7 +93,7 @@ export default function Skills() {
       <div className="section-container" style={{ maxWidth: '1000px' }}>
         <div className="skills-header section-header">
           <h2 className="heading-section">
-            Technologies I <span className="gradient-text" style={{ whiteSpace: 'nowrap' }}>Work With</span>
+            My <span className="gradient-text">Tech Stack</span>
           </h2>
           <p className="subtext">
             A curated set of tools and technologies I use to build modern web experiences.

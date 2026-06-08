@@ -238,7 +238,7 @@ body {
 /* ── Skills group label ──────────────────────────────── */
 .skills-group-label {
   font-family: 'Fira Code', monospace;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -710,7 +710,7 @@ body {
 
 .about-contact-item {
   font-family: "Fira Code", monospace;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: var(--text-secondary);
   margin: 0;
   letter-spacing: 0.02em;
@@ -738,7 +738,7 @@ body {
 
 .about-status-text {
   font-family: "Fira Code", monospace;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   color: var(--teal);
 }
 
@@ -809,7 +809,7 @@ body {
 
 .form-label {
   font-family: "Fira Code", monospace;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -951,8 +951,8 @@ body {
   .section-container { padding: 0 1.25rem; }
 
   /* Reduce vertical breathing room */
-  .section-primary   { padding: 65px 0; }
-  .section-secondary { padding: 70px 0; }
+  .section-primary   { padding: 52px 0; }
+  .section-secondary { padding: 56px 0; }
 
   /* Section header */
   .section-header  { margin-bottom: 2rem; }
@@ -971,10 +971,10 @@ body {
   .grid-about { grid-template-columns: 1fr; gap: 2rem; }
 
   /* About card — reduce padding and avatar on mobile */
-  .about-card   { padding: 1.75rem 1.25rem; width: min(320px, 100%); }
+  .about-card   { padding: 1.75rem 1.25rem; width: 100%; }
   .about-avatar { width: 120px; height: 120px; }
   .about-contact-details { padding: 0.6rem 0.75rem; }
-  .about-contact-item   { font-size: 0.68rem; }
+  .about-contact-item   { font-size: 0.75rem; }
 
   /* Projects — force single column so cards never clip */
   .grid-projects  { grid-template-columns: 1fr; }
@@ -987,7 +987,7 @@ body {
     gap: 0.75rem;
   }
   .skill-card { padding: 1.2rem 0.5rem; }
-  .skill-name { font-size: 0.7rem; letter-spacing: 0; }
+  .skill-name { font-size: 0.75rem; letter-spacing: 0; }
 
   /* Buttons */
   .btn-primary   { padding: 12px 24px; font-size: 0.82rem; }

@@ -166,7 +166,7 @@ export default function Navbar() {
       <div className="nav-inner">
 
         {/* Left: Logo */}
-        <div className="flex-1">
+        <div style={{ flex: 1 }}>
           <a
             href="#hero"
             onClick={(e) => { e.preventDefault(); scrollTo('hero'); }}
@@ -183,7 +183,7 @@ export default function Navbar() {
         </div>
 
         {/* Right: controls (desktop + mobile) */}
-        <div className="flex-1 flex items-center justify-end gap-4">
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '1rem' }}>
           <a
             href="#contact"
             onClick={(e) => { e.preventDefault(); scrollTo('contact'); }}
@@ -233,7 +233,7 @@ export default function Navbar() {
           zIndex: 999,
         }}
       >
-        <div className="flex flex-col gap-5 px-8 py-6">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', padding: '1.5rem 2rem' }}>
           {links.map((l) => (
             <a
               key={l}
