@@ -8,18 +8,11 @@ gsap.registerPlugin(ScrollTrigger);
 const bullets = [
   { emoji: '🚀', text: 'Currently seeking OJT opportunities where I can contribute, grow, and learn from real-world projects.' },
   { emoji: '🤝', text: 'Strong team player — I communicate well, adapt quickly, and work great in collaborative environments.' },
-  { emoji: '🧠', text: 'I integrate AI tooling into my workflow to move faster and solve problems more effectively.' },
+  { emoji: '🧠', text: 'I use AI tools (Cursor, Claude) to research faster and iterate quicker — the same way any dev uses their IDE.' },
   { emoji: '🎨', text: 'Design-driven developer — I care as much about how things look as how they work.' },
   { emoji: '🎮', text: "Outside of coding, I'm an avid gamer with a strong interest in history, geography, and science." },
 ];
 
-// Corner accent positions — only the directional border values change per corner
-const cornerAccents = [
-  { top: -1,    left:  -1, borderTop:    '2px solid var(--accent)', borderLeft:   '2px solid var(--accent)' },
-  { top: -1,    right: -1, borderTop:    '2px solid var(--accent)', borderRight:  '2px solid var(--accent)' },
-  { bottom: -1, left:  -1, borderBottom: '2px solid var(--teal)',   borderLeft:   '2px solid var(--teal)' },
-  { bottom: -1, right: -1, borderBottom: '2px solid var(--teal)',   borderRight:  '2px solid var(--teal)' },
-];
 
 export default function About() {
   const sectionRef  = useRef(null);
@@ -75,11 +68,6 @@ export default function About() {
           {/* Right: visual card */}
           <div className="about-image flex justify-center">
             <div className="about-card">
-              {/* Corner accents */}
-              {cornerAccents.map((s, i) => (
-                <div key={i} style={{ position: 'absolute', width: '20px', height: '20px', borderRadius: '2px', ...s }} />
-              ))}
-
               {/* Avatar */}
               <div className="about-avatar">
                 {imgFailed ? (
@@ -109,7 +97,6 @@ export default function About() {
 
               {/* Contact details */}
               <div className="about-contact-details">
-                <p className="about-contact-item">📞 09500435479</p>
                 <p className="about-contact-item">✉️ carlosaculsan@gmail.com</p>
               </div>
 

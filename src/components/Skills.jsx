@@ -22,7 +22,6 @@ const familiarSkills = [
   { name: 'Node.js',    icon: '🟢', color: '#3d8b40', bg: 'rgba(61,139,64,0.08)',   border: 'rgba(61,139,64,0.25)'  },
   { name: 'Vite',       icon: '⚡', color: '#a259ff', bg: 'rgba(162,89,255,0.07)',  border: 'rgba(162,89,255,0.25)' },
   { name: 'Socket.io',  icon: '🔌', color: null,      bg: null,                     border: null                    },
-  { name: 'Claude',     icon: '✦',  color: '#d97706', bg: 'rgba(217,119,6,0.07)',   border: 'rgba(217,119,6,0.25)'  },
   { name: 'Figma',      icon: '✏️', color: '#E0461A', bg: 'rgba(224,70,26,0.07)',   border: 'rgba(224,70,26,0.25)'  },
 ];
 
