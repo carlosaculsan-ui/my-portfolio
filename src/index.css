@@ -980,7 +980,6 @@ body {
   .grid-projects        { grid-template-columns: 1fr; }
   .project-card         { padding: 1.5rem; }
   .project-title        { font-size: 1.25rem; }
-  .project-preview-mock { display: none; }
 
   /* Skills — 3 fixed columns, compact cards */
   .grid-skills {

@@ -85,31 +85,6 @@ function ProjectCard({ project }) {
       }} />
 
       <div style={{ position: 'relative', zIndex: 1 }}>
-        {/* Browser-chrome preview — replace with <img> once screenshots are ready */}
-        <div className="project-preview-mock" style={{
-          margin: '-2rem -2rem 1.5rem',
-          height: '165px',
-          background: `linear-gradient(160deg, ${project.accent}20 0%, ${project.accent}06 100%)`,
-          position: 'relative',
-          overflow: 'hidden',
-        }}>
-          <div style={{
-            height: '26px', display: 'flex', alignItems: 'center', paddingLeft: '12px', gap: '6px',
-            background: `${project.accent}12`, borderBottom: `1px solid ${project.accent}18`,
-          }}>
-            {[0, 1, 2].map(i => (
-              <div key={i} style={{ width: '8px', height: '8px', borderRadius: '50%', background: `${project.accent}45` }} />
-            ))}
-          </div>
-          <div style={{ padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <div style={{ height: '10px', borderRadius: '3px', background: `${project.accent}28`, width: '55%' }} />
-            <div style={{ height: '7px', borderRadius: '3px', background: `${project.accent}18`, width: '80%' }} />
-            <div style={{ height: '7px', borderRadius: '3px', background: `${project.accent}18`, width: '65%' }} />
-            <div style={{ height: '7px', borderRadius: '3px', background: `${project.accent}18`, width: '42%' }} />
-            <div style={{ height: '22px', borderRadius: '5px', background: `${project.accent}22`, width: '88px', marginTop: '6px' }} />
-          </div>
-        </div>
-
         {/* accent color is per-project, so it stays inline */}
         <p className="project-number" style={{ color: project.accent }}>{project.number}</p>
         <h3 className="project-title">{project.title}</h3>
