@@ -112,7 +112,7 @@ export default function Hero() {
           <span className="typewriter-cursor" />
         </p>
 
-        <div className="flex flex-wrap gap-5 justify-center">
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.25rem', justifyContent: 'center' }}>
           <button
             ref={btn1Ref}
             className="hero-cta magnetic btn-primary"
