@@ -5,7 +5,7 @@ import { useTheme } from '../context/ThemeContext';
 
 const links = ['About', 'Skills', 'Projects', 'Contact'];
 
-function MagneticLink({ label }) {
+function MagneticLink({ label, isActive }) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -41,9 +41,9 @@ function MagneticLink({ label }) {
       ref={ref}
       href={`#${label.toLowerCase()}`}
       onClick={scroll}
-      className="nav-link magnetic"
+      className={`nav-link magnetic${isActive ? ' active' : ''}`}
       onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--accent)'; }}
-      onMouseLeave={(e) => { e.currentTarget.style.color = ''; }}
+      onMouseLeave={(e) => { e.currentTarget.style.removeProperty('color'); }}
     >
       {label}
     </a>
@@ -112,15 +112,26 @@ function ThemeToggle() {
 export default function Navbar() {
   const navRef = useRef(null);
   const { isDark } = useTheme();
-  const [open,     setOpen]     = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [open,          setOpen]          = useState(false);
+  const [scrolled,      setScrolled]      = useState(false);
+  const [activeSection, setActiveSection] = useState('');
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo(navRef.current, { y: -80 }, { y: 0, duration: 0.8, ease: 'power3.out', delay: 0.2 });
     });
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40);
+      const pos = window.scrollY + 120;
+      let current = '';
+      for (const label of links) {
+        const el = document.getElementById(label.toLowerCase());
+        if (el && el.offsetTop <= pos) current = label.toLowerCase();
+      }
+      setActiveSection(current);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
     return () => {
       ctx.revert();
       window.removeEventListener('scroll', onScroll);
@@ -168,7 +179,7 @@ export default function Navbar() {
 
         {/* Center: Desktop nav links */}
         <div className="hidden md:flex items-center gap-14">
-          {links.map((l) => <MagneticLink key={l} label={l} />)}
+          {links.map((l) => <MagneticLink key={l} label={l} isActive={activeSection === l.toLowerCase()} />)}
         </div>
 
         {/* Right: controls (desktop + mobile) */}
