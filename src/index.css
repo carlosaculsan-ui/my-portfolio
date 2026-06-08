@@ -27,7 +27,6 @@
   --nav-shadow:       0 4px 28px rgba(108, 99, 255, 0.09);
   --accent:           #6C63FF;
   --teal:             #00b4a6;
-  --scroll-label:     #9999bb;
   --footer-bg:        #edeeff;
   --footer-border:    rgba(108, 99, 255, 0.12);
   --github-skill:     #2a2a4a;
@@ -50,7 +49,6 @@
   --nav-shadow:       none;
   --accent:           #6C63FF;
   --teal:             #00F5D4;
-  --scroll-label:     #444460;
   --footer-bg:        #080810;
   --footer-border:    rgba(108, 99, 255, 0.10);
   --github-skill:     #e8e8e8;
@@ -571,38 +569,20 @@ body {
   margin-bottom: 1.5rem;
 }
 
+.hero-role {
+  font-family: "Fira Code", monospace;
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: var(--teal);
+  letter-spacing: 0.18em;
+  margin-bottom: 1.5rem;
+}
+
 .hero-sub {
   font-family: "Inter", sans-serif;
   font-size: clamp(1rem, 2.5vw, 1.35rem);
   color: var(--text-muted);
   margin-bottom: 2.8rem;
   min-height: 2em;
-}
-
-/* Scroll indicator (also a GSAP target) */
-.hero-scroll {
-  position: absolute;
-  bottom: 2.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.scroll-label {
-  font-family: "Fira Code", monospace;
-  font-size: 0.7rem;
-  color: var(--scroll-label);
-  letter-spacing: 0.2em;
-}
-
-.scroll-line {
-  width: 1.5px;
-  height: 50px;
-  background: linear-gradient(to bottom, var(--accent), transparent);
-  animation: float 2s ease-in-out infinite;
 }
 
 /* ── About section (GSAP targets + layout) ───────────── */

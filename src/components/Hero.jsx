@@ -72,9 +72,9 @@ export default function Hero() {
     const ctx = gsap.context(() => {
       gsap.from('.hero-greeting', { y: 30, opacity: 0, duration: 0.8, delay: 0.5,  ease: 'power3.out' });
       gsap.from('.hero-name',     { y: 40, opacity: 0, duration: 0.9, delay: 0.75, ease: 'power3.out' });
-      gsap.from('.hero-sub',      { y: 30, opacity: 0, duration: 0.8, delay: 1.0,  ease: 'power3.out' });
-      gsap.from('.hero-cta',      { y: 25, opacity: 0, duration: 0.7, delay: 1.3,  ease: 'power3.out', stagger: 0.15 });
-      gsap.from('.hero-scroll',   { y: 15, opacity: 0, duration: 0.6, delay: 2.0,  ease: 'power3.out' });
+      gsap.from('.hero-role',     { y: 25, opacity: 0, duration: 0.7, delay: 0.9,  ease: 'power3.out' });
+      gsap.from('.hero-sub',      { y: 30, opacity: 0, duration: 0.8, delay: 1.1,  ease: 'power3.out' });
+      gsap.from('.hero-cta',      { y: 25, opacity: 0, duration: 0.7, delay: 1.35, ease: 'power3.out', stagger: 0.15 });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -105,6 +105,8 @@ export default function Hero() {
         <p className="hero-greeting">Hi, my name is</p>
 
         <h1 className="hero-name">Carlo Saculsan</h1>
+
+        <p className="hero-role">Web App Developer</p>
 
         <p className="hero-sub">
           {displayed}
