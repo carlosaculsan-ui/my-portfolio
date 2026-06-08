@@ -138,61 +138,83 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Right: form */}
-          <form className="contact-form" onSubmit={handleSubmit} noValidate>
-            <div className="form-field">
-              <label className="form-label" htmlFor="cf-name">Name</label>
-              <input
-                id="cf-name"
-                className="form-input"
-                type="text"
-                name="name"
-                required
-                placeholder="Your name"
-                value={form.name}
-                onChange={handleChange}
-              />
+          {/* Right: form / success state */}
+          {status === 'success' ? (
+            <div className="contact-form" style={{ alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: '1rem' }}>
+              <div style={{ fontSize: '2.8rem' }}>✉️</div>
+              <p style={{ fontFamily: '"Oswald", sans-serif', fontWeight: 600, fontSize: '1.5rem', color: 'var(--teal)', margin: 0 }}>
+                Message sent!
+              </p>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.7, margin: 0 }}>
+                I'll get back to you as soon as I can.
+              </p>
+              <button
+                className="btn-secondary"
+                onClick={() => { setStatus('idle'); setForm({ name: '', email: '', message: '' }); }}
+                style={{ marginTop: '0.75rem' }}
+              >
+                Send another
+              </button>
             </div>
-            <div className="form-field">
-              <label className="form-label" htmlFor="cf-email">Email</label>
-              <input
-                id="cf-email"
-                className="form-input"
-                type="email"
-                name="email"
-                required
-                placeholder="your@email.com"
-                value={form.email}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-field">
-              <label className="form-label" htmlFor="cf-message">Message</label>
-              <textarea
-                id="cf-message"
-                className="form-input form-textarea"
-                name="message"
-                required
-                placeholder="What's on your mind?"
-                value={form.message}
-                onChange={handleChange}
-              />
-            </div>
+          ) : (
+            <form className="contact-form" onSubmit={handleSubmit} noValidate>
+              <div className="form-field">
+                <label className="form-label" htmlFor="cf-name">Name</label>
+                <input
+                  id="cf-name"
+                  className="form-input"
+                  type="text"
+                  name="name"
+                  required
+                  placeholder="Your name"
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-field">
+                <label className="form-label" htmlFor="cf-email">Email</label>
+                <input
+                  id="cf-email"
+                  className="form-input"
+                  type="email"
+                  name="email"
+                  required
+                  placeholder="your@email.com"
+                  value={form.email}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-field">
+                <label className="form-label" htmlFor="cf-message">Message</label>
+                <textarea
+                  id="cf-message"
+                  className="form-input form-textarea"
+                  name="message"
+                  required
+                  placeholder="What's on your mind?"
+                  value={form.message}
+                  onChange={handleChange}
+                />
+              </div>
 
-            <button type="submit" className="btn-primary form-submit" disabled={status === 'sending'}>
-              {status === 'sending'
-                ? 'Sending...'
-                : <><Send size={15} strokeWidth={2} /> Send Message</>
-              }
-            </button>
+              <button type="submit" className="btn-primary form-submit" disabled={status === 'sending'}>
+                {status === 'sending'
+                  ? 'Sending...'
+                  : <><Send size={15} strokeWidth={2} /> Send Message</>
+                }
+              </button>
 
-            {status === 'success' && (
-              <p className="form-feedback form-success">Message sent! I'll get back to you soon.</p>
-            )}
-            {status === 'error' && (
-              <p className="form-feedback form-error">Something went wrong. Try emailing me directly.</p>
-            )}
-          </form>
+              {status === 'error' && (
+                <p className="form-feedback form-error">
+                  Something went wrong.{' '}
+                  <a href="mailto:carlosaculsan@gmail.com" style={{ color: 'inherit', textDecoration: 'underline' }}>
+                    Email me directly
+                  </a>{' '}
+                  instead.
+                </p>
+              )}
+            </form>
+          )}
 
         </div>
       </div>
