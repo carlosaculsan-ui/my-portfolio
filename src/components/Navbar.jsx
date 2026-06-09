@@ -58,6 +58,7 @@ function ThemeToggle() {
       onClick={toggleTheme}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      className="theme-toggle-btn"
       style={{
         position: 'relative',
         width: '56px',

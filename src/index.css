@@ -822,7 +822,7 @@ body {
   border-radius: 8px;
   padding: 0.75rem 1rem;
   font-family: "Inter", sans-serif;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: var(--text-primary);
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -923,6 +923,24 @@ body {
    RESPONSIVE
    ══════════════════════════════════════════════════════ */
 
+/* ── Theme toggle — extended touch target on mobile ─────── */
+@media (pointer: coarse) {
+  .theme-toggle-btn {
+    position: relative;
+  }
+  .theme-toggle-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 44px;
+    min-height: 44px;
+    width: 100%;
+    height: 100%;
+  }
+}
+
 /* ── Touch devices — disable custom cursor ───────────── */
 @media (pointer: coarse) {
   .cursor-dot,
@@ -1018,11 +1036,19 @@ body {
     gap: 0.6rem;
   }
 
+  /* Center the lone last card when total count is odd */
+  .grid-skills > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: calc(50% - 0.3rem);
+    justify-self: center;
+    width: 100%;
+  }
+
   /* Contact social buttons — stack vertically */
   .contact-socials-row { flex-direction: column; align-items: center; }
   .contact-social      { width: 100%; max-width: 280px; }
   .contact-resume-btn  { width: 100%; max-width: 280px; }
 
   /* Tighten form inputs */
-  .form-input { padding: 0.65rem 0.75rem; font-size: 0.9rem; }
+  .form-input { padding: 0.65rem 0.75rem; }
 }
