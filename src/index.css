@@ -876,14 +876,6 @@ body {
 
 /* ── Footer ──────────────────────────────────────────── */
 .nav-logo {
-  font-family: "Oswald", sans-serif;
-  font-weight: 700;
-  font-size: 1.5rem;
-  letter-spacing: 0.08em;
-  background: linear-gradient(135deg, var(--accent), var(--teal));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
   text-decoration: none;
   display: inline-flex;
   align-items: center;

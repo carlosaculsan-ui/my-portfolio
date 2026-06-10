@@ -174,7 +174,32 @@ export default function Navbar() {
             className="nav-logo"
             aria-label="Home"
           >
-            CS
+            <svg width="48" height="34" viewBox="0 0 48 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="nl-grad" x1="0" y1="17" x2="48" y2="17" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="#6C63FF" />
+                  <stop offset="100%" stopColor="#00F5D4" />
+                </linearGradient>
+                <filter id="nl-glow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+              <text
+                x="24" y="28"
+                textAnchor="middle"
+                fontFamily="Oswald, sans-serif"
+                fontWeight="700"
+                fontSize="30"
+                fill="none"
+                stroke="url(#nl-grad)"
+                strokeWidth="1.5"
+                filter="url(#nl-glow)"
+              >CS</text>
+            </svg>
           </a>
         </div>
 
