@@ -95,7 +95,7 @@ function ProjectCard({ project }) {
         pointerEvents: 'none',
       }} />
 
-      <div style={{ position: 'relative', zIndex: 1 }}>
+      <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', flex: 1 }}>
         {/* accent color is per-project, so it stays inline */}
         <p className="project-number" style={{ color: project.accent }}>{project.number}</p>
         <h3 className="project-title">{project.title}</h3>
