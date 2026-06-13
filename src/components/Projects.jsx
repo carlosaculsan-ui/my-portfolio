@@ -51,6 +51,17 @@ const projects = [
     accent: '#e05580',
     gradient: 'linear-gradient(135deg, rgba(224,85,128,0.10) 0%, rgba(224,85,128,0.02) 100%)',
   },
+  {
+    number: '05',
+    title: 'Taya!',
+    description:
+      'A Filipino higher-or-lower guessing game. Features a daily challenge mode, endless mode with streaks, crowd stats via Firebase, bilingual Tagalog/English UI, and synthesized Web Audio sound effects — all styled as a perya carnival booth.',
+    tags: ['React Vite', 'Firebase', 'Tailwind CSS', 'Web Audio API', 'Vercel'],
+    github: null,
+    live: 'https://taya-black.vercel.app/',
+    accent: '#ff4757',
+    gradient: 'linear-gradient(135deg, rgba(255,71,87,0.10) 0%, rgba(255,71,87,0.02) 100%)',
+  },
 ];
 
 function ProjectCard({ project }) {
